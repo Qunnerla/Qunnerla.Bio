@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUNNERLA - Portfolio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        /* ==============================
+           1. ตั้งค่าพื้นฐาน (รองรับทุกหน้าจอ)
+           ============================== */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #0d0d0d;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ==============================
+           2. ส่วนโปรไฟล์ และปุ่ม LINE (ด้านบน)
+           ============================== */
+        .profile-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            z-index: 10;
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #333;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        h1 { margin: 0; font-size: 24px; letter-spacing: 2px; }
+        
+        p.bio-desc {
+            color: #888; font-size: 14px; text-align: center;
+            margin-top: 5px; margin-bottom: 25px; line-height: 1.5;
+        }
+
+        .link-container {
+            width: 100%; max-width: 320px;
+            display: flex; justify-content: center;
+        }
+
+        .link-btn {
+            width: 100%;
+            background: rgba(0, 195, 0, 0.1); /* สีเขียวจางๆ สไตล์ LINE */
+            color: #00c300;
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 30px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid rgba(0, 195, 0, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .link-btn:hover {
+            background: rgba(0, 195, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 195, 0, 0.2);
+        }
+
+        /* ==============================
+           3. ส่วนการ์ดพัดไพ่ (Card Fan Effect)
+           ============================== */
+        .swiper-container-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 40px;
+            padding-bottom: 60px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .swiper {
+            width: 100%;
+            padding-top: 30px;
+            padding-bottom: 50px;
+        }
+
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            border-radius: 20px;
+            box-shadow: -10px 10px 30px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            /* เตรียม 3D สำหรับลูกเล่นจิ้มการ์ด */
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease-out;
+        }
+
+        /* 🔴 การจัดการขนาดหน้าจอ (Responsive) 🔴 */
+        /* สำหรับคอมพิวเตอร์ (PC) */
+        @media (min-width: 1025px) {
+            .swiper-slide { width: 320px; height: 480px; }
+        }
+        /* สำหรับไอแพด (Tablet) */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .swiper-slide { width: 280px; height: 420px; }
+        }
+        /* สำหรับมือถือ (Mobile) */
+        @media (max-width: 768px) {
+            .swiper-slide { width: 240px; height: 360px; }
+            .profile-pic { width: 80px; height: 80px; }
+            h1 { font-size: 20px; }
+        }
+
+        /* ==============================
+           4. เลเยอร์ด้านในหน้าการ์ด
+           ============================== */
+        .video-bg {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; z-index: 1;
+        }
+
+        .card-overlay {
+            position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 60%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+            z-index: 2;
+        }
+
+        .card-info {
+            position: absolute; bottom: 20px; left: 0;
+            width: 100%; text-align: center;
+            z-index: 4;
+            transform: translateZ(40px); /* ดันข้อความให้ลอยขึ้น */
+            transition: all 0.5s ease-out;
+        }
+        .card-info h3 { margin: 0; font-size: 22px; text-transform: uppercase; text-shadow: 0 2px 5px #000; }
+        .card-info p { margin: 5px 0 0 0; font-size: 13px; color: #ccc; }
+
+        /* ลูกเล่นตอนเอานิ้วจิ้ม หรือเมาส์ชี้การ์ดแต่ละใบ */
+        .swiper-slide:hover, 
+        .swiper-slide.active {
+            box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.9);
+        }
+        .swiper-slide:hover .card-info, 
+        .swiper-slide.active .card-info {
+            transform: translateZ(70px) scale(1.1);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="profile-section">
+        <img src="https://i.ibb.co/3sS29Fp/qunnerla-cat.jpg" alt="Profile" class="profile-pic">
+        <h1>QUNNERLA</h1>
+        <p class="bio-desc">2D Animator / Motion Artist<br>Business & Commission</p>
+        
+        <div class="link-container">
+            <a href="#" class="link-btn">💬 ติดต่อ Line Group</a>
+        </div>
+    </div>
+
+    <div class="swiper-container-wrapper">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                
+                <div class="swiper-slide">
+                    <video class="video-bg" autoplay loop muted playsinline>
+                        <source src="Airi-Witching-Hour.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-overlay"></div>
+                    <div class="card-info">
+                        <h3>Airi</h3>
+                        <p>Witching Hour</p>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <video class="video-bg" autoplay loop muted playsinline>
+                        <source src="Aya-Cinnamoroll-Dream.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-overlay"></div>
+                    <div class="card-info">
+                        <h3>Aya</h3>
+                        <p>Cinnamoroll Dream</p>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <video class="video-bg" autoplay loop muted playsinline>
+                        <source src="Butterfly-EVO.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-overlay"></div>
+                    <div class="card-info">
+                        <h3>Butterfly</h3>
+                        <p>EVO</p>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <video class="video-bg" autoplay loop muted playsinline>
+                        <source src="Diao-chan-Elemental-Divinity.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-overlay"></div>
+                    <div class="card-info">
+                        <h3>Diao Chan</h3>
+                        <p>Elemental Divinity</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // --- ระบบกางพัดไพ่ (Card Fan Effect) ---
+        const swiper = new Swiper(".mySwiper", {
+            direction: "horizontal", // เลื่อนซ้ายขวา
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            initialSlide: 1, // เริ่มต้นที่การ์ดใบที่ 2 (ให้อยู่ตรงกลาง)
+            coverflowEffect: {
+                rotate: 15,       // องศาการเอียงของการ์ดด้านข้าง
+                stretch: -40,     // 🔴 ค่าติดลบคือหัวใจสำคัญที่ทำให้การ์ดซ้อนกันเหมือนพัดไพ่
+                depth: 150,       // ความลึกของการ์ดใบหลัง
+                modifier: 1.5,    // ความแรงของเอฟเฟกต์
+                slideShadows: true, // เปิดเงาดำๆ ระหว่างการ์ด
+            },
+            keyboard: { enabled: true },
+            mousewheel: { forceToAxis: true }, // ใช้ลูกกลิ้งเมาส์เลื่อนซ้ายขวาได้
+        });
+
+        // ลูกเล่นสำหรับมือถือ (จิ้มแล้วให้ตัวหนังสือเด้งขึ้น)
+        document.querySelectorAll('.swiper-slide').forEach(card => {
+            card.addEventListener('click', () => {
+                // ลบคลาส active จากใบอื่นก่อน
+                document.querySelectorAll('.swiper-slide').forEach(c => c.classList.remove('active'));
+                // เพิ่มให้ใบที่จิ้ม
+                card.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
