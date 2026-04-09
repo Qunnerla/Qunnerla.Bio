@@ -63,26 +63,31 @@
         }
 
         /* ==============================
-           4. เลเยอร์ด้านในหน้าการ์ด (🔴 ท่าไม้ตายแก้ขอบเหลี่ยม 🔴)
+           4. เลเยอร์แก้บั๊กขอบเหลี่ยม (แยกกรอบเด้ง กับ กรอบตัดวิดีโอ)
            ============================== */
-        .card-inner {
+        /* ตัวหุ้มด้านนอก: รับหน้าที่เด้งและสร้างเงา (ไม่ให้เงาโดนตัด) */
+        .card-bounce-wrapper {
             width: 100%; height: 100%;
-            position: relative;
             border-radius: 20px;
-            overflow: hidden;
-            
-            /* สร้างระยะบังคับให้เบราว์เซอร์ตัดขอบวิดีโอใหม่ */
-            isolation: isolate; 
-            -webkit-mask-image: -webkit-radial-gradient(white, black);
-            
             box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
             cursor: pointer;
         }
 
+        /* ตัวหุ้มด้านใน: รับหน้าที่ตัดขอบวิดีโอและฟิล์มดำด้วย Clip-path แบบเด็ดขาด */
+        .card-clipper {
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            /* 🔴 ท่าไม้ตาย! บังคับตัดขอบให้มน 20px เสมอ ไม่ว่าวิดีโอจะทำอะไร 🔴 */
+            -webkit-clip-path: inset(0 0 0 0 round 20px);
+            clip-path: inset(0 0 0 0 round 20px);
+        }
+
         /* ไพ่ที่อยู่ตรงกลาง (Active) จะเด้งขึ้นมา */
-        .swiper-slide-active .card-inner {
+        .swiper-slide-active .card-bounce-wrapper {
             transform: translateY(-30px);
             box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -92,12 +97,6 @@
             position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
             object-fit: cover; z-index: 1;
-            
-            /* บังคับให้ตัววิดีโอมนด้วยเลย จะได้ไม่ทะลักกล่องออกมา */
-            border-radius: 20px; 
-            -webkit-border-radius: 20px;
-            /* ขยายวิดีโอนิดนึงเพื่อกลบขอบเหลี่ยมที่บั๊กของเบราว์เซอร์โชว์ออกมา */
-            transform: scale(1.01); 
         }
 
         /* ฟิล์มดำคลุมไพ่ใบอื่นให้จางลง */
@@ -106,7 +105,6 @@
             width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
             z-index: 2;
-            border-radius: 20px;
             transition: background-color 0.4s ease;
         }
         .swiper-slide-active .card-dark-fade { background-color: transparent; }
@@ -117,7 +115,6 @@
             width: 100%; height: 60%;
             background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
             z-index: 3;
-            border-radius: 0 0 20px 20px;
             opacity: 0; transition: opacity 0.5s ease;
         }
         .swiper-slide-active .card-gradient { opacity: 1; }
@@ -182,61 +179,69 @@
             <div class="swiper-wrapper">
                 
                 <div class="swiper-slide">
-                    <div class="card-inner">
-                        <video class="video-bg" autoplay loop muted playsinline>
-                            <source src="Airi-Witching-Hour.mp4" type="video/mp4">
-                        </video>
-                        <div class="card-dark-fade"></div>
-                        <div class="card-gradient"></div>
-                        
-                        <div class="card-details">
-                            <h3>Airi | Witching Hour</h3>
-                            <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
+                    <div class="card-bounce-wrapper">
+                        <div class="card-clipper">
+                            <video class="video-bg" autoplay loop muted playsinline>
+                                <source src="Airi-Witching-Hour.mp4" type="video/mp4">
+                            </video>
+                            <div class="card-dark-fade"></div>
+                            <div class="card-gradient"></div>
+                            
+                            <div class="card-details">
+                                <h3>Airi | Witching Hour</h3>
+                                <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="swiper-slide">
-                    <div class="card-inner">
-                        <video class="video-bg" autoplay loop muted playsinline>
-                            <source src="Aya-Cinnamoroll-Dream.mp4" type="video/mp4">
-                        </video>
-                        <div class="card-dark-fade"></div>
-                        <div class="card-gradient"></div>
-                        
-                        <div class="card-details">
-                            <h3>Aya | Cinnamoroll Dream</h3>
-                            <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
+                    <div class="card-bounce-wrapper">
+                        <div class="card-clipper">
+                            <video class="video-bg" autoplay loop muted playsinline>
+                                <source src="Aya-Cinnamoroll-Dream.mp4" type="video/mp4">
+                            </video>
+                            <div class="card-dark-fade"></div>
+                            <div class="card-gradient"></div>
+                            
+                            <div class="card-details">
+                                <h3>Aya | Cinnamoroll Dream</h3>
+                                <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="swiper-slide">
-                    <div class="card-inner">
-                        <video class="video-bg" autoplay loop muted playsinline>
-                            <source src="Buterfly-EVO.mp4" type="video/mp4">
-                        </video>
-                        <div class="card-dark-fade"></div>
-                        <div class="card-gradient"></div>
-                        
-                        <div class="card-details">
-                            <h3>Butterfly | EVO</h3>
-                            <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
+                    <div class="card-bounce-wrapper">
+                        <div class="card-clipper">
+                            <video class="video-bg" autoplay loop muted playsinline>
+                                <source src="Buterfly-EVO.mp4" type="video/mp4">
+                            </video>
+                            <div class="card-dark-fade"></div>
+                            <div class="card-gradient"></div>
+                            
+                            <div class="card-details">
+                                <h3>Butterfly | EVO</h3>
+                                <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="swiper-slide">
-                    <div class="card-inner">
-                        <video class="video-bg" autoplay loop muted playsinline>
-                            <source src="Diao-chan-Elemental-Divinity.mp4" type="video/mp4">
-                        </video>
-                        <div class="card-dark-fade"></div>
-                        <div class="card-gradient"></div>
-                        
-                        <div class="card-details">
-                            <h3>Diao Chan | Elemental Divinity</h3>
-                            <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
+                    <div class="card-bounce-wrapper">
+                        <div class="card-clipper">
+                            <video class="video-bg" autoplay loop muted playsinline>
+                                <source src="Diao-chan-Elemental-Divinity.mp4" type="video/mp4">
+                            </video>
+                            <div class="card-dark-fade"></div>
+                            <div class="card-gradient"></div>
+                            
+                            <div class="card-details">
+                                <h3>Diao Chan | Elemental Divinity</h3>
+                                <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -260,7 +265,7 @@
             centeredSlides: true,
             slidesPerView: "auto",
             initialSlide: 1, 
-            slideToClickedSlide: true,
+            slideToClickedSlide: true, 
             creativeEffect: {
                 limitProgress: 3, 
                 prev: {
