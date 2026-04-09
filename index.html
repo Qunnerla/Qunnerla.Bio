@@ -63,19 +63,12 @@
         }
 
         /* ==============================
-           4. เลเยอร์ด้านในหน้าการ์ด (แก้ขอบเหลี่ยมแบบเด็ดขาด)
+           4. เลเยอร์การ์ด (🔴 ท่าไม้ตาย Clip-Path ตัดขอบมนเด็ดขาด 🔴)
            ============================== */
         .card-inner {
             width: 100%; height: 100%;
             position: relative;
-            
-            /* 🔴 ท่าไม้ตายใหม่: ใช้ border-radius แล้วซ่อนส่วนที่เกินด้วย overflow: hidden */
             border-radius: 20px;
-            overflow: hidden;
-            
-            /* 🔴 บังคับให้ขอบโค้งทำงานกับวิดีโอ (Webkit Fix) */
-            -webkit-transform: translateZ(0); 
-            
             box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -89,20 +82,23 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* กล่องหุ้มวิดีโอ (ตัวตัดขอบ) */
-        .video-wrapper {
-            position: absolute; top: 0; left: 0;
+        /* ตัวครอบวิดีโอและเงา บังคับตัดขอบด้วยมีด (Clip-Path) */
+        .card-clipper {
             width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0;
             border-radius: 20px;
+            background-color: #000;
             overflow: hidden;
+            /* โค้ดบังคับตัดขอบ ไม่ว่าเบราว์เซอร์จะดื้อแค่ไหน */
+            -webkit-clip-path: inset(0px round 20px);
+            clip-path: inset(0px round 20px);
             z-index: 1;
         }
 
         .video-bg {
             width: 100%; height: 100%;
             object-fit: cover;
-            /* ขยายวิดีโอนิดนึงเพื่อลบขอบสีขาวๆ ที่อาจโผล่มา */
-            transform: scale(1.02); 
+            transform: scale(1.02); /* ขยายใหญ่ขึ้น 2% ปิดรอยแหว่ง */
         }
 
         /* ฟิล์มดำคลุมไพ่ใบอื่นให้จางลง */
@@ -110,20 +106,19 @@
             position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
-            z-index: 2;
-            border-radius: 20px;
             transition: background-color 0.4s ease;
         }
         .swiper-slide-active .card-dark-fade { background-color: transparent; }
 
         /* เงาดำด้านล่าง */
         .card-gradient {
-            position: absolute; bottom: 0; left: 0;
-            width: 100%; height: 60%;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            z-index: 3;
-            border-radius: 0 0 20px 20px;
+            position: absolute; bottom: -2px; left: 0; /* ดึงลงนิดนึงปิดขอบล่าง */
+            width: 100%; height: 65%;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
             opacity: 0; transition: opacity 0.5s ease;
+            /* เพิ่มความชัวร์ ให้มุมล่างซ้าย-ขวามนตามการ์ดด้วย */
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
         .swiper-slide-active .card-gradient { opacity: 1; }
 
@@ -132,7 +127,7 @@
            ============================== */
         .card-details {
             position: absolute; bottom: -80px; left: 15px; right: 15px;
-            z-index: 4; text-align: left;
+            z-index: 10; text-align: left;
             opacity: 0; transition: all 0.5s ease;
             pointer-events: none;
         }
@@ -188,13 +183,13 @@
                 
                 <div class="swiper-slide">
                     <div class="card-inner">
-                        <div class="video-wrapper">
+                        <div class="card-clipper">
                             <video class="video-bg" autoplay loop muted playsinline>
                                 <source src="Airi-Witching-Hour.mp4" type="video/mp4">
                             </video>
+                            <div class="card-dark-fade"></div>
+                            <div class="card-gradient"></div>
                         </div>
-                        <div class="card-dark-fade"></div>
-                        <div class="card-gradient"></div>
                         
                         <div class="card-details">
                             <h3>Airi | Witching Hour</h3>
@@ -205,13 +200,13 @@
 
                 <div class="swiper-slide">
                     <div class="card-inner">
-                        <div class="video-wrapper">
+                        <div class="card-clipper">
                             <video class="video-bg" autoplay loop muted playsinline>
                                 <source src="Aya-Cinnamoroll-Dream.mp4" type="video/mp4">
                             </video>
+                            <div class="card-dark-fade"></div>
+                            <div class="card-gradient"></div>
                         </div>
-                        <div class="card-dark-fade"></div>
-                        <div class="card-gradient"></div>
                         
                         <div class="card-details">
                             <h3>Aya | Cinnamoroll Dream</h3>
@@ -222,13 +217,13 @@
 
                 <div class="swiper-slide">
                     <div class="card-inner">
-                        <div class="video-wrapper">
+                        <div class="card-clipper">
                             <video class="video-bg" autoplay loop muted playsinline>
                                 <source src="Buterfly-EVO.mp4" type="video/mp4">
                             </video>
+                            <div class="card-dark-fade"></div>
+                            <div class="card-gradient"></div>
                         </div>
-                        <div class="card-dark-fade"></div>
-                        <div class="card-gradient"></div>
                         
                         <div class="card-details">
                             <h3>Butterfly | EVO</h3>
@@ -239,13 +234,13 @@
 
                 <div class="swiper-slide">
                     <div class="card-inner">
-                        <div class="video-wrapper">
+                        <div class="card-clipper">
                             <video class="video-bg" autoplay loop muted playsinline>
                                 <source src="Diao-chan-Elemental-Divinity.mp4" type="video/mp4">
                             </video>
+                            <div class="card-dark-fade"></div>
+                            <div class="card-gradient"></div>
                         </div>
-                        <div class="card-dark-fade"></div>
-                        <div class="card-gradient"></div>
                         
                         <div class="card-details">
                             <h3>Diao Chan | Elemental Divinity</h3>
@@ -266,7 +261,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // --- ระบบกางพัดไพ่ครึ่งวงกลม ---
         const swiper = new Swiper(".mySwiper", {
             effect: "creative",
             grabCursor: true,
