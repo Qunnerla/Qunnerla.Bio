@@ -102,24 +102,6 @@
         }
         .swiper-slide-active .card-gradient { opacity: 1; }
 
-        /* ไอคอนปุ่ม Play (โชว์เฉพาะใบตรงกลางให้รู้ว่ากดดูคลิปได้) */
-        .play-icon {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px; height: 60px;
-            background: rgba(0,0,0,0.6);
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            z-index: 5; opacity: 0; transition: opacity 0.3s ease;
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(255,255,255,0.5);
-        }
-        .play-icon::after {
-            content: "▶"; color: white; font-size: 24px; margin-left: 5px;
-        }
-        .swiper-slide-active .play-icon { opacity: 1; }
-        .swiper-slide-active:hover .play-icon { background: rgba(255, 65, 108, 0.8); border-color: transparent; }
-
         /* ==============================
            5. รายละเอียดมุมซ้ายล่าง
            ============================== */
@@ -185,13 +167,13 @@
         .video-modal.active { display: flex; opacity: 1; }
         
         .modal-content {
-            width: 95%; max-width: 1000px; /* ขนาดกว้างสุดสำหรับจอแนวนอน */
+            width: 95%; max-width: 1000px; 
             background: #000; border-radius: 10px; overflow: hidden;
             position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.8);
         }
         
         .modal-content video {
-            width: 100%; display: block; max-height: 85vh; /* บังคับไม่ให้ล้นจอ */
+            width: 100%; display: block; max-height: 85vh; 
         }
 
         .close-btn {
@@ -228,7 +210,6 @@
                     <div class="card-clip">
                         <img class="image-cover" src="Airi-Witching-Hour.jpg" alt="Airi">
                         <div class="card-gradient"></div>
-                        <div class="play-icon"></div>
                         <div class="card-details"><h3>Airi | Witching Hour</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -236,7 +217,7 @@
                 <div class="swiper-slide" data-video="Aya-Cinnamoroll-Dream.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Aya-Cinnamoroll-Dream.jpg" alt="Aya">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Aya | Cinnamoroll Dream</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -244,7 +225,7 @@
                 <div class="swiper-slide" data-video="Buterfly-EVO.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Buterfly-EVO.jpg" alt="Butterfly">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Butterfly | EVO</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -252,7 +233,7 @@
                 <div class="swiper-slide" data-video="Diao-chan-Elemental-Divinity.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Diao-chan-Elemental-Divinity.jpg" alt="Diao Chan">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Diao Chan | Elemental Divinity</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -260,7 +241,7 @@
                 <div class="swiper-slide" data-video="Hayate-Kid-the-Phantom.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Hayate-Kid-the-Phantom.jpg" alt="Hayate">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Hayate | Kid the Phantom</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -268,7 +249,7 @@
                 <div class="swiper-slide" data-video="Iggy-Rimuru-Tempest.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Iggy-Rimuru-Tempest.jpg" alt="Iggy">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Iggy | Rimuru Tempest</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -276,7 +257,7 @@
                 <div class="swiper-slide" data-video="Liliana-Witching-Hour.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Liliana-Witching-Hour.jpg" alt="Liliana">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Liliana | Witching Hour</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -284,7 +265,7 @@
                 <div class="swiper-slide" data-video="Murad-Moon-Chuser.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Murad-Moon-Chuser.jpg" alt="Murad">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Murad | Moon Chuser</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -292,7 +273,7 @@
                 <div class="swiper-slide" data-video="Nakroth-Stellar-Troupe.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Nakroth-Stellar-Troupe.jpg" alt="Nakroth">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Nakroth | Stellar Troupe</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -300,7 +281,7 @@
                 <div class="swiper-slide" data-video="Natalya-Kuromi-Heart.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Natalya-Kuromi-Heart.jpg" alt="Natalya">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Natalya | Kuromi Heart</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -308,7 +289,7 @@
                 <div class="swiper-slide" data-video="Qi-Milim-Nava.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Qi-Milim-Nava.jpg" alt="Qi">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Qi | Milim Nava</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -316,7 +297,7 @@
                 <div class="swiper-slide" data-video="Raz-Super-Striker.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Raz-Super-Striker.jpg" alt="Raz">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Raz | Super Striker</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -324,7 +305,7 @@
                 <div class="swiper-slide" data-video="Rouie-Glazed-World.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Rouie-Glazed-World.jpg" alt="Rouie">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Rouie | Glazed World</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -332,7 +313,7 @@
                 <div class="swiper-slide" data-video="Sephera-Western-Regions-Stormy.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Sephera-Western-Regions-Stormy.jpg" alt="Sephera">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Sephera | Western Regions Stormy</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -340,7 +321,7 @@
                 <div class="swiper-slide" data-video="Tara-Shion.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Tara-Shion.jpg" alt="Tara">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Tara | Shion</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -348,7 +329,7 @@
                 <div class="swiper-slide" data-video="Tulen-Gojo-Satoru.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Tulen-Gojo-Satoru.jpg" alt="Tulen">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Tulen | Gojo Satoru</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -356,7 +337,7 @@
                 <div class="swiper-slide" data-video="Valhien-Dimension-Breaker.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Valhien-Dimension-Breaker.jpg" alt="Valhien">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Valhien | Dimension Breaker</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -364,7 +345,7 @@
                 <div class="swiper-slide" data-video="Veera-Melody-Love.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Veera-Melody-Love.jpg" alt="Veera">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Veera | Melody Love</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -372,7 +353,7 @@
                 <div class="swiper-slide" data-video="Violet-Demonic-morphed.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Violet-Demonic-morphed.jpg" alt="Violet">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Violet | Demonic morphed</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -380,7 +361,7 @@
                 <div class="swiper-slide" data-video="Xi-Shi-Lovesickness.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Xi-Shi-Lovesickness.jpg" alt="Xi Shi">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Xi Shi | Lovesickness</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -388,7 +369,7 @@
                  <div class="swiper-slide" data-video="Frieren.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Frieren.jpg" alt="Frieren">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Frieren</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -396,7 +377,7 @@
                 <div class="swiper-slide" data-video="Nymph-Gardener.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Nymph-Gardener.jpg" alt="Nymph">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Nymph | Gardener</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
@@ -404,7 +385,7 @@
                 <div class="swiper-slide" data-video="Little-Mirage.mp4">
                     <div class="card-clip">
                         <img class="image-cover" src="Little-Mirage.jpg" alt="Little Mirage">
-                        <div class="card-gradient"></div><div class="play-icon"></div>
+                        <div class="card-gradient"></div>
                         <div class="card-details"><h3>Little Mirage</h3><p>Animation PNG Resolution 5K</p></div>
                     </div>
                 </div>
