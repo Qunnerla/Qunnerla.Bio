@@ -6,6 +6,9 @@
     <title>QUNNERLA - Portfolio</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
+        /* ==============================
+           1. ตั้งค่าพื้นฐาน
+           ============================== */
         body {
             margin: 0; padding: 0;
             min-height: 100vh;
@@ -16,6 +19,9 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
+        /* ==============================
+           2. ส่วนโปรไฟล์ (ด้านบน)
+           ============================== */
         .profile-section {
             width: 100%; display: flex; flex-direction: column; align-items: center;
             padding-top: 40px; z-index: 10;
@@ -29,11 +35,15 @@
         }
 
         h1 { margin: 0; font-size: 24px; letter-spacing: 2px; }
+        
         p.bio-desc {
             color: #888; font-size: 14px; text-align: center;
             margin-top: 5px; margin-bottom: 10px; line-height: 1.5;
         }
 
+        /* ==============================
+           3. ส่วนกรอบพัดไพ่ (Card Fan)
+           ============================== */
         .swiper-container-wrapper {
             width: 100%; max-width: 1200px;
             margin-top: 20px; padding-bottom: 40px;
@@ -41,9 +51,18 @@
 
         .swiper { width: 100%; padding: 40px 0; overflow: visible; }
 
+        /* 🔴 ใช้โครงสร้างเดียวกับ .grid-item ในพอร์ตของคุณเป๊ะๆ 🔴 */
         .swiper-slide {
             width: 280px; height: 420px;
-            background: transparent; 
+            position: relative;
+            background: transparent !important;
+            border-radius: 20px; 
+            overflow: hidden; /* บังคับตัดขอบทุกอย่างที่ล้นออกมา */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            cursor: pointer;
+            /* แก้บั๊กขอบเหลี่ยมใน Safari/Chrome */
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            -webkit-transform: translateZ(0);
         }
 
         @media (max-width: 768px) {
@@ -53,92 +72,69 @@
         }
 
         /* ==============================
-           กล่องการ์ดหลัก (เด้ง 3D เเละเงา)
+           4. เลเยอร์ด้านในหน้าการ์ด
            ============================== */
-        .card-main {
+        .swiper-slide video {
             width: 100%; height: 100%;
-            border-radius: 20px;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            cursor: pointer;
-        }
-        .swiper-slide-active .card-main {
-            transform: translateY(-25px); /* ใบตรงกลางเด้งขึ้น */
-            box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.9);
-        }
-
-        /* ==============================
-           กล่องตัดขอบ (ซ่อนทุกอย่างที่ล้นออกไป)
-           ============================== */
-        .card-clip {
-            width: 100%; height: 100%;
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden; /* 🔴 กุญแจสำคัญ: ห้ามอะไรทะลุกล่องนี้เด็ดขาด 🔴 */
-            -webkit-mask-image: -webkit-radial-gradient(white, black); /* แก้บั๊ก Safari */
-            transform: translateZ(0);
-        }
-
-        .video-bg {
-            width: 100%; height: 100%;
+            display: block;
             object-fit: cover;
-            border-radius: 20px; /* บังคับวิดีโอให้โค้งด้วย */
-            transform: scale(1.02); 
+            transform: scale(1.01); /* ขยายปิดรอยต่อ */
         }
 
-        /* ฟิล์มดำ (ใบข้างๆ) */
-        .fade-overlay {
+        /* ฟิล์มดำคลุมไพ่ใบอื่นให้จางลง */
+        .card-dark-fade {
             position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
-            transition: background-color 0.4s ease;
             z-index: 2;
+            transition: background-color 0.4s ease;
         }
-        .swiper-slide-active .fade-overlay { background-color: transparent; }
+        .swiper-slide-active .card-dark-fade { background-color: transparent; }
 
-        /* เงาดำ (ใบตรงกลาง) */
-        .gradient-overlay {
+        /* เงาดำด้านล่าง */
+        .card-gradient {
             position: absolute; bottom: 0; left: 0;
             width: 100%; height: 60%;
-            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
-            opacity: 0; transition: opacity 0.4s ease;
+            /* เหมือน .overlay ในพอร์ตของคุณเป๊ะ */
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
             z-index: 3;
+            opacity: 0; transition: opacity 0.4s ease;
         }
-        .swiper-slide-active .gradient-overlay { opacity: 1; }
+        .swiper-slide-active .card-gradient { opacity: 1; }
 
         /* ==============================
-           ตัวหนังสือ (เลื่อนจาก "ข้างใน" กล่อง)
+           5. รายละเอียดมุมซ้ายล่าง (Hero | Skin)
            ============================== */
-        .details-box {
-            position: absolute; 
-            left: 15px; right: 15px;
-            /* ซ่อนไว้ใต้ขอบล่าง "ด้านใน" กล่อง (ไม่ทะลุออกไปข้างนอกแล้ว) */
-            bottom: -80px; 
+        .card-details {
+            position: absolute; bottom: -80px; left: 15px; right: 15px;
             z-index: 4; text-align: left;
             opacity: 0; transition: all 0.4s ease;
             pointer-events: none;
         }
-        .swiper-slide-active .details-box {
-            bottom: 20px; /* เลื่อนขึ้นมา */
-            opacity: 1;
+        
+        .swiper-slide-active .card-details {
+            bottom: 20px; opacity: 1;
         }
 
-        .details-box h3 { 
+        .card-details h3 { 
             margin: 0 0 5px 0; font-size: 20px; font-weight: bold;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
-        .details-box p { 
+        .card-details p { 
             margin: 0; font-size: 11px; color: #ccc; line-height: 1.5;
             opacity: 0.8;
         }
 
-        /* ปุ่มติดต่อ Line */
+        /* ==============================
+           6. ปุ่มติดต่อ Line
+           ============================== */
         .contact-section {
             width: 100%; display: flex; justify-content: center;
             padding-bottom: 50px; z-index: 10;
         }
+
         .link-container { width: 100%; max-width: 320px; padding: 0 20px; box-sizing: border-box; }
+
         .link-btn {
             display: block; width: 100%;
             background: rgba(0, 195, 0, 0.1);
@@ -166,70 +162,50 @@
             <div class="swiper-wrapper">
                 
                 <div class="swiper-slide">
-                    <div class="card-main">
-                        <div class="card-clip">
-                            <video class="video-bg" autoplay loop muted playsinline>
-                                <source src="Airi-Witching-Hour.mp4" type="video/mp4">
-                            </video>
-                            <div class="fade-overlay"></div>
-                            <div class="gradient-overlay"></div>
-                            
-                            <div class="details-box">
-                                <h3>Airi | Witching Hour</h3>
-                                <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
-                            </div>
-                        </div>
+                    <video autoplay loop muted playsinline>
+                        <source src="Airi-Witching-Hour.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-dark-fade"></div>
+                    <div class="card-gradient"></div>
+                    <div class="card-details">
+                        <h3>Airi | Witching Hour</h3>
+                        <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
                     </div>
                 </div>
 
                 <div class="swiper-slide">
-                    <div class="card-main">
-                        <div class="card-clip">
-                            <video class="video-bg" autoplay loop muted playsinline>
-                                <source src="Aya-Cinnamoroll-Dream.mp4" type="video/mp4">
-                            </video>
-                            <div class="fade-overlay"></div>
-                            <div class="gradient-overlay"></div>
-                            
-                            <div class="details-box">
-                                <h3>Aya | Cinnamoroll Dream</h3>
-                                <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
-                            </div>
-                        </div>
+                    <video autoplay loop muted playsinline>
+                        <source src="Aya-Cinnamoroll-Dream.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-dark-fade"></div>
+                    <div class="card-gradient"></div>
+                    <div class="card-details">
+                        <h3>Aya | Cinnamoroll Dream</h3>
+                        <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
                     </div>
                 </div>
 
                 <div class="swiper-slide">
-                    <div class="card-main">
-                        <div class="card-clip">
-                            <video class="video-bg" autoplay loop muted playsinline>
-                                <source src="Buterfly-EVO.mp4" type="video/mp4">
-                            </video>
-                            <div class="fade-overlay"></div>
-                            <div class="gradient-overlay"></div>
-                            
-                            <div class="details-box">
-                                <h3>Butterfly | EVO</h3>
-                                <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
-                            </div>
-                        </div>
+                    <video autoplay loop muted playsinline>
+                        <source src="Buterfly-EVO.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-dark-fade"></div>
+                    <div class="card-gradient"></div>
+                    <div class="card-details">
+                        <h3>Butterfly | EVO</h3>
+                        <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
                     </div>
                 </div>
 
                 <div class="swiper-slide">
-                    <div class="card-main">
-                        <div class="card-clip">
-                            <video class="video-bg" autoplay loop muted playsinline>
-                                <source src="Diao-chan-Elemental-Divinity.mp4" type="video/mp4">
-                            </video>
-                            <div class="fade-overlay"></div>
-                            <div class="gradient-overlay"></div>
-                            
-                            <div class="details-box">
-                                <h3>Diao Chan | Elemental Divinity</h3>
-                                <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
-                            </div>
-                        </div>
+                    <video autoplay loop muted playsinline>
+                        <source src="Diao-chan-Elemental-Divinity.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-dark-fade"></div>
+                    <div class="card-gradient"></div>
+                    <div class="card-details">
+                        <h3>Diao Chan | Elemental Divinity</h3>
+                        <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
                     </div>
                 </div>
 
@@ -254,6 +230,7 @@
             slideToClickedSlide: true,
             creativeEffect: {
                 limitProgress: 3, 
+                /* เลื่อนไพ่ใบซ้ายและขวา "ต่ำลง" (15%) แทนการทำให้ใบกลางเด้งขึ้น */
                 prev: {
                     translate: ["-60%", "15%", 0], 
                     rotate: [0, 0, -15],         
