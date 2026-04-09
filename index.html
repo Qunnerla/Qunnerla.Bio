@@ -54,7 +54,7 @@
         .swiper-slide {
             width: 280px; height: 420px;
             position: relative;
-            background: transparent !important; /* 🔴 แก้บั๊กขอบเทาใต้การ์ด (ลบสีพื้นหลังทิ้ง) */
+            background: transparent !important; 
             border-radius: 20px; 
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             cursor: pointer;
@@ -62,7 +62,7 @@
         }
 
         /* ==============================
-           4. เลเยอร์การ์ด & 🌟 Liquid Glass Effect 🌟
+           4. เลเยอร์การ์ด (ใช้รูปภาพหน้าปกแทนวิดีโอ)
            ============================== */
         .card-clip {
             width: 100%; height: 100%;
@@ -70,28 +70,23 @@
             position: relative;
             overflow: hidden; 
             -webkit-mask-image: -webkit-radial-gradient(white, black);
-            transition: filter 0.4s ease; /* 🔴 ลบ transform เด้งขึ้นออก ป้องกันขอบล่างโหว่ */
+            transition: filter 0.4s ease; 
         }
 
-        /* 🌟 ลูกเล่นขอบกระจกใส (Liquid Glass) เคลือบทับบนการ์ด 🌟 */
+        /* Liquid Glass Effect */
         .card-clip::after {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.25); /* ขอบการ์ดใสๆ */
-            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.05) 100%); /* แสงสะท้อน */
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.05) 100%);
             z-index: 10;
-            pointer-events: none; /* ไม่ให้บังการกด */
+            pointer-events: none;
         }
 
-        .swiper-slide:not(.swiper-slide-active) .card-clip {
-            filter: blur(3px) brightness(0.6);
-        }
-        
-        .swiper-slide-active .card-clip {
-            filter: blur(0px) brightness(1);
-        }
+        .swiper-slide:not(.swiper-slide-active) .card-clip { filter: blur(3px) brightness(0.6); }
+        .swiper-slide-active .card-clip { filter: blur(0px) brightness(1); }
 
         .image-cover {
             position: absolute; top: 0; left: 0;
@@ -103,12 +98,12 @@
             z-index: 1;
         }
 
-        /* 🌟 เงาดำใต้ตัวหนังสือ ปรับเป็นแบบกระจกฝ้า (Frosted Glass) 🌟 */
+        /* Frosted Glass Gradient */
         .card-gradient {
             position: absolute; bottom: 0; left: 0;
             width: 100%; height: 50%;
             background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            backdrop-filter: blur(3px); /* ทำละลายฉากหลังให้เป็นเนื้อแก้ว */
+            backdrop-filter: blur(3px); 
             -webkit-backdrop-filter: blur(3px);
             z-index: 3;
             opacity: 0; transition: opacity 0.4s ease;
@@ -183,10 +178,35 @@
             width: 95%; max-width: 1000px; 
             background: #000; border-radius: 10px; overflow: hidden;
             position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            /* 🔴 สำคัญ: ต้องใส่ relative ตรงนี้เพื่อให้ลายน้ำเกาะติดกับคลิป 🔴 */
         }
         
         .modal-content video {
             width: 100%; display: block; max-height: 85vh; 
+        }
+
+        /* 🌟 ระบบลายน้ำ (Watermark) 🌟 */
+        .watermark {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-25deg); /* หมุนเฉียงๆ */
+            color: rgba(255, 255, 255, 0.3); /* สีขาว โปร่งแสง 30% */
+            font-size: 4vw; /* ปรับขนาดตามความกว้างจอ */
+            font-weight: 900;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            pointer-events: none; /* 🔴 สำคัญมาก! เพื่อให้คลิกทะลุลายน้ำไปโดนปุ่ม Play/Pause ของวิดีโอได้ 🔴 */
+            z-index: 1000;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* เพิ่มเงาให้ดูมีมิติ ไม่กลืนไปกับฉากขาว */
+            white-space: nowrap;
+            /* ป้องกันการคลุมดำก๊อปปี้ข้อความ */
+            user-select: none; 
+            -webkit-user-select: none;
+        }
+
+        /* ปรับขนาดลายน้ำสำหรับมือถือ */
+        @media (max-width: 768px) {
+            .watermark { font-size: 6vw; }
         }
 
         .close-btn {
@@ -205,6 +225,9 @@
         <span class="close-btn" id="closeModal">&times;</span>
         <div class="modal-content">
             <video id="modalVideo" controls playsinline autoplay></video>
+            
+            <div class="watermark">สวยเเล้ว สวยเเล้ว สวยไม่ไหวเเล้ว</div>
+            
         </div>
     </div>
 
@@ -412,16 +435,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // 1. สร้างระบบเลื่อนพัดไพ่ (Swiper.js)
-        // 🔴 ปล่อยให้ Swiper จัดการเรื่องการกดการ์ดใบข้างๆ ให้เลื่อนมาตรงกลาง (slideToClickedSlide: true)
-        // 🔴 และใช้ creativeEffect ดันการ์ดใบข้างๆ ให้ต่ำลง 15% แทนการเขียนให้ใบกลางเด้งขึ้นไปเอง
         const swiper = new Swiper(".mySwiper", {
             effect: "creative",
             grabCursor: true,
             centeredSlides: true,
             slidesPerView: "auto",
             initialSlide: 1, 
-            slideToClickedSlide: true, 
+            slideToClickedSlide: true,
             creativeEffect: {
                 limitProgress: 3, 
                 prev: { translate: ["-60%", "15%", 0], rotate: [0, 0, -15], origin: "bottom center" },
@@ -430,39 +450,34 @@
             keyboard: { enabled: true }
         });
 
-        // 2. ระบบ Modal ป๊อปอัปเล่นวิดีโอ
         const videoModal = document.getElementById('videoModal');
         const modalVideo = document.getElementById('modalVideo');
         const closeBtn = document.getElementById('closeModal');
 
-        // เมื่อกดคลิกที่ตัวการ์ด
         swiper.on('click', function () {
-            // เช็คว่าการ์ดที่กด คือการ์ดใบที่อยู่ "ตรงกลาง" (Active) หรือไม่
-            // ถ้ากดโดนใบข้างๆ Swiper จะทำการเลื่อน (Slide) ใบนั้นมาตรงกลางเฉยๆ คลิปจะไม่เด้งขึ้นมา
             const activeSlide = document.querySelector('.swiper-slide-active');
             
             if (this.clickedSlide === activeSlide) {
                 const videoSrc = activeSlide.getAttribute('data-video');
                 
                 if (videoSrc) {
-                    modalVideo.src = videoSrc; // ดึงชื่อไฟล์ .mp4 มาใส่ให้แท็ก <video>
-                    videoModal.classList.add('active'); // เปิดหน้าต่างป๊อปอัป
-                    modalVideo.play(); // สั่งเล่นคลิป
+                    modalVideo.src = videoSrc;
+                    videoModal.classList.add('active');
+                    modalVideo.play();
                 }
             }
         });
 
-        // ฟังก์ชันปิดหน้าต่างวิดีโอ
         function closeVideoModal() {
             videoModal.classList.remove('active');
-            modalVideo.pause(); // หยุดคลิป
-            modalVideo.src = ''; // ล้างหน่วยความจำ เพื่อประหยัดแรมมือถือ
+            modalVideo.pause();
+            modalVideo.src = '';
         }
 
         closeBtn.addEventListener('click', closeVideoModal);
         
-        // ถ้าผู้ใช้จิ้มนอกกรอบวิดีโอสีดำๆ ก็ให้ปิดหน้าต่างเช่นกัน
         videoModal.addEventListener('click', function(e) {
+            // เช็คว่าถ้าไม่ได้คลิกโดนวิดีโอ (เช่น คลิกพื้นที่สีดำรอบๆ) ให้ปิดหน้าต่าง
             if(e.target === videoModal) {
                 closeVideoModal();
             }
