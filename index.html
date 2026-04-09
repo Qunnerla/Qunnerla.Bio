@@ -20,7 +20,7 @@
         }
 
         /* ==============================
-           2. ส่วนโปรไฟล์ (ด้านบน)
+           2. ส่วนโปรไฟล์
            ============================== */
         .profile-section {
             width: 100%; display: flex; flex-direction: column; align-items: center;
@@ -31,19 +31,18 @@
             width: 100px; height: 100px;
             border-radius: 50%; object-fit: cover;
             border: 2px solid #333; margin-bottom: 15px;
-            background-color: #222; /* สีพื้นหลังเผื่อรูปรอโหลด */
+            background-color: #222; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
         h1 { margin: 0; font-size: 24px; letter-spacing: 2px; }
-        
         p.bio-desc {
             color: #888; font-size: 14px; text-align: center;
             margin-top: 5px; margin-bottom: 10px; line-height: 1.5;
         }
 
         /* ==============================
-           3. ส่วนกรอบพัดไพ่ (Card Fan)
+           3. กรอบพัดไพ่
            ============================== */
         .swiper-container-wrapper {
             width: 100%; max-width: 1200px;
@@ -55,7 +54,7 @@
         .swiper-slide {
             width: 280px; height: 420px;
             position: relative;
-            background: #111 !important; /* พื้นหลังสีเทาเข้ม กันจอดำตอนรอโหลด */
+            background: #111 !important; 
             border-radius: 20px; 
             overflow: hidden; 
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
@@ -67,17 +66,19 @@
         /* ==============================
            4. เลเยอร์ด้านในหน้าการ์ด
            ============================== */
-        .swiper-slide video {
+        .video-bg {
+            position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
             display: block;
             object-fit: cover;
             transform: scale(1.02); 
+            z-index: 1;
         }
 
         .card-dark-fade {
             position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.7); 
             z-index: 2;
             transition: background-color 0.4s ease;
         }
@@ -93,18 +94,16 @@
         .swiper-slide-active .card-gradient { opacity: 1; }
 
         /* ==============================
-           5. รายละเอียดมุมซ้ายล่าง (Hero | Skin)
+           5. รายละเอียดมุมซ้ายล่าง
            ============================== */
         .card-details {
-            position: absolute; bottom: -80px; left: 15px; right: 15px;
+            position: absolute; bottom: -100px; left: 15px; right: 15px;
             z-index: 4; text-align: left;
             opacity: 0; transition: all 0.4s ease;
             pointer-events: none;
         }
         
-        .swiper-slide-active .card-details {
-            bottom: 20px; opacity: 1;
-        }
+        .swiper-slide-active .card-details { bottom: 20px; opacity: 1; }
 
         .card-details h3 { 
             margin: 0 0 5px 0; font-size: 20px; font-weight: bold;
@@ -113,6 +112,23 @@
         .card-details p { 
             margin: 0; font-size: 11px; color: #ccc; line-height: 1.5;
             opacity: 0.8;
+        }
+
+        /* ==============================
+           📱 การตั้งค่ารองรับหน้าจอ iPad & Mobile
+           ============================== */
+        @media (max-width: 1024px) {
+            .swiper-slide { width: 260px; height: 390px; }
+            h1 { font-size: 22px; }
+        }
+
+        @media (max-width: 768px) {
+            .swiper-slide { width: 220px; height: 330px; }
+            .profile-pic { width: 85px; height: 85px; }
+            h1 { font-size: 20px; }
+            .card-details h3 { font-size: 16px; }
+            .card-details p { font-size: 10px; }
+            .swiper-slide-active .card-details { bottom: 15px; }
         }
 
         /* ==============================
@@ -137,28 +153,6 @@
         }
         .link-btn:hover { background: rgba(0, 195, 0, 0.2); transform: translateY(-2px); }
 
-        /* ==============================
-           🔴 7. การตั้งค่ารองรับหน้าจอ iPad & Mobile 🔴
-           ============================== */
-        
-        /* สำหรับ iPad หรือ Tablet */
-        @media (max-width: 1024px) {
-            .swiper-slide { width: 260px; height: 390px; }
-            h1 { font-size: 22px; }
-        }
-
-        /* สำหรับ โทรศัพท์มือถือ */
-        @media (max-width: 768px) {
-            .swiper-slide { width: 220px; height: 330px; }
-            .profile-pic { width: 85px; height: 85px; }
-            h1 { font-size: 20px; }
-            
-            /* ลดขนาดฟอนต์บนมือถือ เพื่อไม่ให้ตัวหนังสือตกบรรทัด */
-            .card-details h3 { font-size: 16px; }
-            .card-details p { font-size: 10px; }
-            .swiper-slide-active .card-details { bottom: 15px; }
-        }
-
     </style>
 </head>
 <body>
@@ -174,117 +168,117 @@
             <div class="swiper-wrapper">
                 
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Airi-Witching-Hour.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Airi-Witching-Hour.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Airi | Witching Hour</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Aya-Cinnamoroll-Dream.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Aya-Cinnamoroll-Dream.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Aya | Cinnamoroll Dream</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Buterfly-EVO.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Buterfly-EVO.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Butterfly | EVO</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Diao-chan-Elemental-Divinity.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Diao-chan-Elemental-Divinity.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Diao Chan | Elemental Divinity</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Frieren.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Frieren.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Frieren</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Hayate-Kid-the-Phantom.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Hayate-Kid-the-Phantom.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Hayate | Kid the Phantom</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Iggy-Rimuru-Tempest.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Iggy-Rimuru-Tempest.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Iggy | Rimuru Tempest</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Liliana-Witching-Hour.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Liliana-Witching-Hour.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Liliana | Witching Hour</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Little-Mirage.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Little-Mirage.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Little Mirage</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Murad-Moon-Chuser.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Murad-Moon-Chuser.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Murad | Moon Chuser</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Nakroth-Stellar-Troupe.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Nakroth-Stellar-Troupe.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Nakroth | Stellar Troupe</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Natalya-Kuromi-Heart.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Natalya-Kuromi-Heart.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Natalya | Kuromi Heart</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Nymph-Gardener.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Nymph-Gardener.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Nymph | Gardener</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Qi-Milim-Nava.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Qi-Milim-Nava.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Qi | Milim Nava</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Raz-Super-Striker-Wallpaper.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Raz-Super-Striker-Wallpaper.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Raz | Super Striker</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Rouie-Glazed-World.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Rouie-Glazed-World.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Rouie | Glazed World</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Sephera-Western-Regions-Stormy.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Sephera-Western-Regions-Stormy.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Sephera | Western Regions Stormy</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Tara-Shion.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Tara-Shion.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Tara | Shion</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Tulen-Gojo-Satoru.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Tulen-Gojo-Satoru.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Tulen | Gojo Satoru</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Valhien-Dimension-Breaker.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Valhien-Dimension-Breaker.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Valhien | Dimension Breaker</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Veera-Melody-Love.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Veera-Melody-Love.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Veera | Melody Love</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Violet-Demonic-morphed.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Violet-Demonic-morphed.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Violet | Demonic morphed</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
                 <div class="swiper-slide">
-                    <video loop muted playsinline preload="none"><source src="Xi-Shi-Lovesickness.mp4" type="video/mp4"></video>
+                    <video class="video-bg" loop muted playsinline preload="none" data-src="Xi-Shi-Lovesickness.mp4"></video>
                     <div class="card-dark-fade"></div><div class="card-gradient"></div>
                     <div class="card-details"><h3>Xi Shi | Lovesickness</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
@@ -316,38 +310,38 @@
             keyboard: { enabled: true }
         });
 
-        // 🔴 ระบบโหลดและเล่นวิดีโอเฉพาะการ์ดรอบๆ ตัว (แก้ปัญหาจอดำ และลดภาระเครื่อง) 🔴
-        function handleVideoPlayback() {
-            // สั่งหยุด (Pause) ทุกวิดีโอก่อนเพื่อล้างแรม
-            document.querySelectorAll('.swiper-slide video').forEach(vid => {
-                vid.pause();
+        // 🔴 สคริปต์ขั้นเทพ: ล้างหน่วยความจำมือถือแบบ Real-time 🔴
+        function manageMemoryAndPlay() {
+            const slides = document.querySelectorAll('.swiper-slide');
+            
+            slides.forEach((slide, index) => {
+                const vid = slide.querySelector('video');
+                if (!vid) return;
+
+                // เช็คว่าการ์ดใบนี้อยู่ใกล้จุดกึ่งกลางไหม (ตรงกลาง 1 ใบ, ซ้าย 1, ขวา 1)
+                if (Math.abs(swiper.activeIndex - index) <= 1) {
+                    // ถ้ายังไม่มี src (ถูกล้างไป หรือเพิ่งโหลด) ให้เอาจาก data-src มาใส่
+                    if (!vid.getAttribute('src')) {
+                        vid.setAttribute('src', vid.getAttribute('data-src'));
+                        vid.load();
+                    }
+                    vid.play().catch(e => console.log("รอผู้ใช้แตะหน้าจอ"));
+                } else {
+                    // 🔴 ถ้าการ์ดอยู่ไกลออกไป ให้หยุดเล่น และ "ถอดไฟล์ออก" เพื่อคืนแรมให้มือถือทันที!
+                    vid.pause();
+                    if (vid.getAttribute('src')) {
+                        vid.removeAttribute('src');
+                        vid.load(); // บังคับให้เบราว์เซอร์คายแรมทิ้ง
+                    }
+                }
             });
-
-            // เล่นเฉพาะใบตรงกลาง, ซ้าย 1, ขวา 1
-            const activeSlide = document.querySelector('.swiper-slide-active');
-            const prevSlide = document.querySelector('.swiper-slide-prev');
-            const nextSlide = document.querySelector('.swiper-slide-next');
-
-            if (activeSlide) {
-                let vid = activeSlide.querySelector('video');
-                if (vid) vid.play().catch(e => console.log(e));
-            }
-            if (prevSlide) {
-                let vid = prevSlide.querySelector('video');
-                if (vid) vid.play().catch(e => console.log(e));
-            }
-            if (nextSlide) {
-                let vid = nextSlide.querySelector('video');
-                if (vid) vid.play().catch(e => console.log(e));
-            }
         }
 
-        // โหลดครั้งแรก
-        setTimeout(handleVideoPlayback, 500);
+        // โหลดครั้งแรกตอนเข้าเว็บ
+        setTimeout(manageMemoryAndPlay, 300);
 
-        // โหลดเมื่อเลื่อนไพ่เสร็จ
-        swiper.on('slideChangeTransitionEnd', handleVideoPlayback);
-
+        // ทำงานทุกครั้งที่ปัดเลื่อนการ์ด
+        swiper.on('slideChangeTransitionEnd', manageMemoryAndPlay);
     </script>
 
 </body>
