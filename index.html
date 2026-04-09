@@ -51,16 +51,14 @@
 
         .swiper { width: 100%; padding: 40px 0; overflow: visible; }
 
-        /* 🔴 ใช้โครงสร้างเดียวกับ .grid-item ในพอร์ตของคุณเป๊ะๆ 🔴 */
         .swiper-slide {
             width: 280px; height: 420px;
             position: relative;
             background: transparent !important;
             border-radius: 20px; 
-            overflow: hidden; /* บังคับตัดขอบทุกอย่างที่ล้นออกมา */
+            overflow: hidden; 
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             cursor: pointer;
-            /* แก้บั๊กขอบเหลี่ยมใน Safari/Chrome */
             -webkit-mask-image: -webkit-radial-gradient(white, black);
             -webkit-transform: translateZ(0);
         }
@@ -78,10 +76,9 @@
             width: 100%; height: 100%;
             display: block;
             object-fit: cover;
-            transform: scale(1.01); /* ขยายปิดรอยต่อ */
+            transform: scale(1.01); 
         }
 
-        /* ฟิล์มดำคลุมไพ่ใบอื่นให้จางลง */
         .card-dark-fade {
             position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
@@ -91,11 +88,9 @@
         }
         .swiper-slide-active .card-dark-fade { background-color: transparent; }
 
-        /* เงาดำด้านล่าง */
         .card-gradient {
             position: absolute; bottom: 0; left: 0;
             width: 100%; height: 60%;
-            /* เหมือน .overlay ในพอร์ตของคุณเป๊ะ */
             background: linear-gradient(transparent, rgba(0,0,0,0.95));
             z-index: 3;
             opacity: 0; transition: opacity 0.4s ease;
@@ -162,51 +157,120 @@
             <div class="swiper-wrapper">
                 
                 <div class="swiper-slide">
-                    <video autoplay loop muted playsinline>
-                        <source src="Airi-Witching-Hour.mp4" type="video/mp4">
-                    </video>
-                    <div class="card-dark-fade"></div>
-                    <div class="card-gradient"></div>
-                    <div class="card-details">
-                        <h3>Airi | Witching Hour</h3>
-                        <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
-                    </div>
+                    <video autoplay loop muted playsinline><source src="Airi-Witching-Hour.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Airi | Witching Hour</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Aya-Cinnamoroll-Dream.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Aya | Cinnamoroll Dream</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Buterfly-EVO.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Butterfly | EVO</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Diao-chan-Elemental-Divinity.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Diao Chan | Elemental Divinity</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
 
                 <div class="swiper-slide">
-                    <video autoplay loop muted playsinline>
-                        <source src="Aya-Cinnamoroll-Dream.mp4" type="video/mp4">
-                    </video>
-                    <div class="card-dark-fade"></div>
-                    <div class="card-gradient"></div>
-                    <div class="card-details">
-                        <h3>Aya | Cinnamoroll Dream</h3>
-                        <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
-                    </div>
+                    <video autoplay loop muted playsinline><source src="Frieren.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Frieren</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
-
                 <div class="swiper-slide">
-                    <video autoplay loop muted playsinline>
-                        <source src="Buterfly-EVO.mp4" type="video/mp4">
-                    </video>
-                    <div class="card-dark-fade"></div>
-                    <div class="card-gradient"></div>
-                    <div class="card-details">
-                        <h3>Butterfly | EVO</h3>
-                        <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
-                    </div>
+                    <video autoplay loop muted playsinline><source src="Hayate-Kid-the-Phantom.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Hayate | Kid the Phantom</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
-
                 <div class="swiper-slide">
-                    <video autoplay loop muted playsinline>
-                        <source src="Diao-chan-Elemental-Divinity.mp4" type="video/mp4">
-                    </video>
-                    <div class="card-dark-fade"></div>
-                    <div class="card-gradient"></div>
-                    <div class="card-details">
-                        <h3>Diao Chan | Elemental Divinity</h3>
-                        <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
-                    </div>
+                    <video autoplay loop muted playsinline><source src="Iggy-Rimuru-Tempest.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Iggy | Rimuru Tempest</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Liliana-Witching-Hour.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Liliana | Witching Hour</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Little-Mirage.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Little Mirage</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Murad-Moon-Chuser.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Murad | Moon Chuser</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Nakroth-Stellar-Troupe.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Nakroth | Stellar Troupe</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Natalya-Kuromi-Heart.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Natalya | Kuromi Heart</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Nymph-Gardener.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Nymph | Gardener</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Qi-Milim-Nava.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Qi | Milim Nava</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Raz-Super-Striker-Wallpaper.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Raz | Super Striker</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Rouie-Glazed-World.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Rouie | Glazed World</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Sephera-Western-Regions-Stormy.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Sephera | Western Regions Stormy</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Tara-Shion.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Tara | Shion</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Tulen-Gojo-Satoru.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Tulen | Gojo Satoru</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Valhien-Dimension-Breaker.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Valhien | Dimension Breaker</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Veera-Melody-Love.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Veera | Melody Love</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Violet-Demonic-morphed.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Violet | Demonic morphed</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
+                </div>
+                <div class="swiper-slide">
+                    <video autoplay loop muted playsinline><source src="Xi-Shi-Lovesickness.mp4" type="video/mp4"></video>
+                    <div class="card-dark-fade"></div><div class="card-gradient"></div>
+                    <div class="card-details"><h3>Xi Shi | Lovesickness</h3><p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p></div>
                 </div>
 
             </div>
@@ -230,7 +294,6 @@
             slideToClickedSlide: true,
             creativeEffect: {
                 limitProgress: 3, 
-                /* เลื่อนไพ่ใบซ้ายและขวา "ต่ำลง" (15%) แทนการทำให้ใบกลางเด้งขึ้น */
                 prev: {
                     translate: ["-60%", "15%", 0], 
                     rotate: [0, 0, -15],         
