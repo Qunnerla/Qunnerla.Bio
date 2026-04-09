@@ -7,40 +7,30 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         /* ==============================
-           1. ตั้งค่าพื้นฐาน (รองรับทุกหน้าจอ)
+           1. ตั้งค่าพื้นฐาน
            ============================== */
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             min-height: 100vh;
             background-color: #0d0d0d;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
             overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: flex; flex-direction: column; align-items: center;
         }
 
         /* ==============================
-           2. ส่วนโปรไฟล์ และปุ่ม LINE (ด้านบน)
+           2. ส่วนโปรไฟล์ (ด้านบน)
            ============================== */
         .profile-section {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 40px;
-            z-index: 10;
+            width: 100%; display: flex; flex-direction: column; align-items: center;
+            padding-top: 40px; z-index: 10;
         }
 
         .profile-pic {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #333;
-            margin-bottom: 15px;
+            width: 100px; height: 100px;
+            border-radius: 50%; object-fit: cover;
+            border: 2px solid #333; margin-bottom: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
@@ -48,77 +38,24 @@
         
         p.bio-desc {
             color: #888; font-size: 14px; text-align: center;
-            margin-top: 5px; margin-bottom: 25px; line-height: 1.5;
-        }
-
-        .link-container {
-            width: 100%; max-width: 320px;
-            display: flex; justify-content: center;
-        }
-
-        .link-btn {
-            width: 100%;
-            background: rgba(0, 195, 0, 0.1); /* สีเขียวจางๆ สไตล์ LINE */
-            color: #00c300;
-            text-decoration: none;
-            padding: 15px 20px;
-            border-radius: 30px;
-            text-align: center;
-            font-weight: bold;
-            border: 1px solid rgba(0, 195, 0, 0.3);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            box-sizing: border-box;
-        }
-
-        .link-btn:hover {
-            background: rgba(0, 195, 0, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 195, 0, 0.2);
+            margin-top: 5px; margin-bottom: 10px; line-height: 1.5;
         }
 
         /* ==============================
-           3. ส่วนการ์ดพัดไพ่ (Card Fan Effect)
+           3. ส่วนกรอบพัดไพ่ (Card Fan) อยู่ตรงกลาง
            ============================== */
         .swiper-container-wrapper {
-            width: 100%;
-            max-width: 1200px;
-            margin-top: 40px;
-            padding-bottom: 60px;
-            display: flex;
-            justify-content: center;
+            width: 100%; max-width: 1200px;
+            margin-top: 20px; padding-bottom: 40px;
         }
 
-        .swiper {
-            width: 100%;
-            padding-top: 30px;
-            padding-bottom: 50px;
-        }
+        .swiper { width: 100%; padding: 40px 0; overflow: visible; }
 
         .swiper-slide {
-            background-position: center;
-            background-size: cover;
-            border-radius: 20px;
-            box-shadow: -10px 10px 30px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            /* เตรียม 3D สำหรับลูกเล่นจิ้มการ์ด */
-            transform-style: preserve-3d;
-            transition: transform 0.5s ease-out;
+            width: 280px; height: 420px;
+            background: transparent; 
         }
 
-        /* 🔴 การจัดการขนาดหน้าจอ (Responsive) 🔴 */
-        /* สำหรับคอมพิวเตอร์ (PC) */
-        @media (min-width: 1025px) {
-            .swiper-slide { width: 320px; height: 480px; }
-        }
-        /* สำหรับไอแพด (Tablet) */
-        @media (max-width: 1024px) and (min-width: 769px) {
-            .swiper-slide { width: 280px; height: 420px; }
-        }
-        /* สำหรับมือถือ (Mobile) */
         @media (max-width: 768px) {
             .swiper-slide { width: 240px; height: 360px; }
             .profile-pic { width: 80px; height: 80px; }
@@ -128,38 +65,96 @@
         /* ==============================
            4. เลเยอร์ด้านในหน้าการ์ด
            ============================== */
+        .card-inner {
+            width: 100%; height: 100%;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        /* ไพ่ที่อยู่ตรงกลาง (Active) จะเด้งขึ้นมา */
+        .swiper-slide-active .card-inner {
+            transform: translateY(-30px);
+            box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
         .video-bg {
             position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
             object-fit: cover; z-index: 1;
         }
 
-        .card-overlay {
+        /* ฟิล์มดำคลุมไพ่ใบอื่นให้จางลง */
+        .card-dark-fade {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 2;
+            transition: background-color 0.4s ease;
+        }
+        .swiper-slide-active .card-dark-fade { background-color: transparent; }
+
+        /* เงาดำด้านล่าง */
+        .card-gradient {
             position: absolute; bottom: 0; left: 0;
             width: 100%; height: 60%;
-            background: linear-gradient(transparent, rgba(0,0,0,0.95));
-            z-index: 2;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            z-index: 3;
+            opacity: 0; transition: opacity 0.5s ease; /* ทำให้สมูทขึ้น */
+        }
+        /* 🔴 เปลี่ยนให้แสดงอัตโนมัติเมื่ออยู่ตรงกลาง 🔴 */
+        .swiper-slide-active .card-gradient { opacity: 1; }
+
+        /* ==============================
+           5. รายละเอียดมุมซ้ายล่าง (Hero | Skin)
+           ============================== */
+        .card-details {
+            position: absolute; bottom: -80px; left: 15px; right: 15px;
+            z-index: 4; text-align: left;
+            opacity: 0; transition: all 0.5s ease; /* ทำให้สมูทขึ้น */
+            pointer-events: none;
+        }
+        
+        /* 🔴 เปลี่ยนให้เด้งขึ้นมาอัตโนมัติเมื่ออยู่ตรงกลาง 🔴 */
+        .swiper-slide-active .card-details {
+            bottom: 20px; opacity: 1;
         }
 
-        .card-info {
-            position: absolute; bottom: 20px; left: 0;
-            width: 100%; text-align: center;
-            z-index: 4;
-            transform: translateZ(40px); /* ดันข้อความให้ลอยขึ้น */
-            transition: all 0.5s ease-out;
+        .card-details h3 { 
+            margin: 0 0 5px 0; font-size: 20px; font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
-        .card-info h3 { margin: 0; font-size: 22px; text-transform: uppercase; text-shadow: 0 2px 5px #000; }
-        .card-info p { margin: 5px 0 0 0; font-size: 13px; color: #ccc; }
+        .card-details p { 
+            margin: 0; font-size: 11px; color: #ccc; line-height: 1.5;
+            opacity: 0.8;
+        }
 
-        /* ลูกเล่นตอนเอานิ้วจิ้ม หรือเมาส์ชี้การ์ดแต่ละใบ */
-        .swiper-slide:hover, 
-        .swiper-slide.active {
-            box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.9);
+        /* ==============================
+           6. ปุ่มติดต่อ Line (ย้ายมาไว้ด้านล่าง)
+           ============================== */
+        .contact-section {
+            width: 100%; display: flex; justify-content: center;
+            padding-bottom: 50px; z-index: 10;
         }
-        .swiper-slide:hover .card-info, 
-        .swiper-slide.active .card-info {
-            transform: translateZ(70px) scale(1.1);
+
+        .link-container { width: 100%; max-width: 320px; padding: 0 20px; box-sizing: border-box; }
+
+        .link-btn {
+            display: block; width: 100%;
+            background: rgba(0, 195, 0, 0.1);
+            color: #00c300; text-decoration: none;
+            padding: 15px 20px; border-radius: 30px;
+            text-align: center; font-weight: bold;
+            border: 1px solid rgba(0, 195, 0, 0.3);
+            backdrop-filter: blur(10px); transition: all 0.3s ease;
+            box-sizing: border-box;
         }
+        .link-btn:hover { background: rgba(0, 195, 0, 0.2); transform: translateY(-2px); }
 
     </style>
 </head>
@@ -169,10 +164,6 @@
         <img src="https://i.ibb.co/3sS29Fp/qunnerla-cat.jpg" alt="Profile" class="profile-pic">
         <h1>QUNNERLA</h1>
         <p class="bio-desc">2D Animator / Motion Artist<br>Business & Commission</p>
-        
-        <div class="link-container">
-            <a href="#" class="link-btn">💬 ติดต่อ Line Group</a>
-        </div>
     </div>
 
     <div class="swiper-container-wrapper">
@@ -180,46 +171,62 @@
             <div class="swiper-wrapper">
                 
                 <div class="swiper-slide">
-                    <video class="video-bg" autoplay loop muted playsinline>
-                        <source src="Airi-Witching-Hour.mp4" type="video/mp4">
-                    </video>
-                    <div class="card-overlay"></div>
-                    <div class="card-info">
-                        <h3>Airi</h3>
-                        <p>Witching Hour</p>
+                    <div class="card-inner">
+                        <video class="video-bg" autoplay loop muted playsinline>
+                            <source src="Airi-Witching-Hour.mp4" type="video/mp4">
+                        </video>
+                        <div class="card-dark-fade"></div>
+                        <div class="card-gradient"></div>
+                        
+                        <div class="card-details">
+                            <h3>Airi | Witching Hour</h3>
+                            <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="swiper-slide">
-                    <video class="video-bg" autoplay loop muted playsinline>
-                        <source src="Aya-Cinnamoroll-Dream.mp4" type="video/mp4">
-                    </video>
-                    <div class="card-overlay"></div>
-                    <div class="card-info">
-                        <h3>Aya</h3>
-                        <p>Cinnamoroll Dream</p>
+                    <div class="card-inner">
+                        <video class="video-bg" autoplay loop muted playsinline>
+                            <source src="Aya-Cinnamoroll-Dream.mp4" type="video/mp4">
+                        </video>
+                        <div class="card-dark-fade"></div>
+                        <div class="card-gradient"></div>
+                        
+                        <div class="card-details">
+                            <h3>Aya | Cinnamoroll Dream</h3>
+                            <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="swiper-slide">
-                    <video class="video-bg" autoplay loop muted playsinline>
-                        <source src="Butterfly-EVO.mp4" type="video/mp4">
-                    </video>
-                    <div class="card-overlay"></div>
-                    <div class="card-info">
-                        <h3>Butterfly</h3>
-                        <p>EVO</p>
+                    <div class="card-inner">
+                        <video class="video-bg" autoplay loop muted playsinline>
+                            <source src="Buterfly-EVO.mp4" type="video/mp4">
+                        </video>
+                        <div class="card-dark-fade"></div>
+                        <div class="card-gradient"></div>
+                        
+                        <div class="card-details">
+                            <h3>Butterfly | EVO</h3>
+                            <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="swiper-slide">
-                    <video class="video-bg" autoplay loop muted playsinline>
-                        <source src="Diao-chan-Elemental-Divinity.mp4" type="video/mp4">
-                    </video>
-                    <div class="card-overlay"></div>
-                    <div class="card-info">
-                        <h3>Diao Chan</h3>
-                        <p>Elemental Divinity</p>
+                    <div class="card-inner">
+                        <video class="video-bg" autoplay loop muted playsinline>
+                            <source src="Diao-chan-Elemental-Divinity.mp4" type="video/mp4">
+                        </video>
+                        <div class="card-dark-fade"></div>
+                        <div class="card-gradient"></div>
+                        
+                        <div class="card-details">
+                            <h3>Diao Chan | Elemental Divinity</h3>
+                            <p>Animation PNG Resolution 5544 X 3408 (5K)<br>29.97 FPS 20s Loop</p>
+                        </div>
                     </div>
                 </div>
 
@@ -227,35 +234,37 @@
         </div>
     </div>
 
+    <div class="contact-section">
+        <div class="link-container">
+            <a href="#" class="link-btn">💬 ติดต่อ Line Group</a>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // --- ระบบกางพัดไพ่ (Card Fan Effect) ---
+        // --- ระบบกางพัดไพ่ครึ่งวงกลม ---
         const swiper = new Swiper(".mySwiper", {
-            direction: "horizontal", // เลื่อนซ้ายขวา
-            effect: "coverflow",
+            effect: "creative",
             grabCursor: true,
             centeredSlides: true,
             slidesPerView: "auto",
-            initialSlide: 1, // เริ่มต้นที่การ์ดใบที่ 2 (ให้อยู่ตรงกลาง)
-            coverflowEffect: {
-                rotate: 15,       // องศาการเอียงของการ์ดด้านข้าง
-                stretch: -40,     // 🔴 ค่าติดลบคือหัวใจสำคัญที่ทำให้การ์ดซ้อนกันเหมือนพัดไพ่
-                depth: 150,       // ความลึกของการ์ดใบหลัง
-                modifier: 1.5,    // ความแรงของเอฟเฟกต์
-                slideShadows: true, // เปิดเงาดำๆ ระหว่างการ์ด
+            initialSlide: 1, 
+            slideToClickedSlide: true, // จิ้มไพ่ใบไหน ใบนั้นจะเลื่อนมาตรงกลางอัตโนมัติ
+            creativeEffect: {
+                limitProgress: 3, 
+                prev: {
+                    translate: ["-60%", "15%", 0], 
+                    rotate: [0, 0, -15],         
+                    origin: "bottom center"      
+                },
+                next: {
+                    translate: ["60%", "15%", 0],  
+                    rotate: [0, 0, 15],          
+                    origin: "bottom center"
+                },
             },
-            keyboard: { enabled: true },
-            mousewheel: { forceToAxis: true }, // ใช้ลูกกลิ้งเมาส์เลื่อนซ้ายขวาได้
-        });
-
-        // ลูกเล่นสำหรับมือถือ (จิ้มแล้วให้ตัวหนังสือเด้งขึ้น)
-        document.querySelectorAll('.swiper-slide').forEach(card => {
-            card.addEventListener('click', () => {
-                // ลบคลาส active จากใบอื่นก่อน
-                document.querySelectorAll('.swiper-slide').forEach(c => c.classList.remove('active'));
-                // เพิ่มให้ใบที่จิ้ม
-                card.classList.add('active');
-            });
+            keyboard: { enabled: true }
+            // 🔴 ลบคำสั่งจุกจิกเรื่องการจิ้มออกหมด ให้ CSS จัดการแสดงผลอัตโนมัติ 🔴
         });
     </script>
 
