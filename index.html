@@ -63,13 +63,16 @@
         }
 
         /* ==============================
-           4. เลเยอร์ด้านในหน้าการ์ด
+           4. เลเยอร์ด้านในหน้าการ์ด (แก้ขอบมนที่นี่!)
            ============================== */
         .card-inner {
             width: 100%; height: 100%;
             position: relative;
-            border-radius: 20px;
+            border-radius: 20px; /* บังคับขอบมน */
             overflow: hidden;
+            /* 🔴 โค้ดลับ! บังคับตัดขอบวิดีโอเเละเงาให้เนียนกริบบนทุกเบราว์เซอร์ 🔴 */
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            
             box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -87,6 +90,7 @@
             position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
             object-fit: cover; z-index: 1;
+            border-radius: 20px; /* บังคับขอบวิดีโอ */
         }
 
         /* ฟิล์มดำคลุมไพ่ใบอื่นให้จางลง */
@@ -95,6 +99,7 @@
             width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
             z-index: 2;
+            border-radius: 20px; /* บังคับขอบฟิล์มดำ */
             transition: background-color 0.4s ease;
         }
         .swiper-slide-active .card-dark-fade { background-color: transparent; }
@@ -105,9 +110,9 @@
             width: 100%; height: 60%;
             background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
             z-index: 3;
-            opacity: 0; transition: opacity 0.5s ease; /* ทำให้สมูทขึ้น */
+            border-radius: 0 0 20px 20px; /* 🔴 แก้เงาดำสี่เหลี่ยมด้านล่างให้มนตามขอบไพ่ 🔴 */
+            opacity: 0; transition: opacity 0.5s ease;
         }
-        /* 🔴 เปลี่ยนให้แสดงอัตโนมัติเมื่ออยู่ตรงกลาง 🔴 */
         .swiper-slide-active .card-gradient { opacity: 1; }
 
         /* ==============================
@@ -116,11 +121,10 @@
         .card-details {
             position: absolute; bottom: -80px; left: 15px; right: 15px;
             z-index: 4; text-align: left;
-            opacity: 0; transition: all 0.5s ease; /* ทำให้สมูทขึ้น */
+            opacity: 0; transition: all 0.5s ease;
             pointer-events: none;
         }
         
-        /* 🔴 เปลี่ยนให้เด้งขึ้นมาอัตโนมัติเมื่ออยู่ตรงกลาง 🔴 */
         .swiper-slide-active .card-details {
             bottom: 20px; opacity: 1;
         }
@@ -236,7 +240,7 @@
 
     <div class="contact-section">
         <div class="link-container">
-            <a href="#" class="link-btn">💬 ติดต่อ Line Group</a>
+            <a href="ใส่ลิงก์กลุ่มไลน์ตรงนี้" class="link-btn">💬 ติดต่อ Line Group</a>
         </div>
     </div>
 
@@ -264,7 +268,6 @@
                 },
             },
             keyboard: { enabled: true }
-            // 🔴 ลบคำสั่งจุกจิกเรื่องการจิ้มออกหมด ให้ CSS จัดการแสดงผลอัตโนมัติ 🔴
         });
     </script>
 
