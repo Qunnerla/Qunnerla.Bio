@@ -55,12 +55,10 @@
         .swiper-slide {
             width: 280px; height: 420px;
             background: transparent !important; 
-            /* 🔴 สำคัญมาก: เปิดให้ทะลุกรอบ เพื่อให้เม็ดเด้งออกมาได้ 🔴 */
             overflow: visible !important; 
             z-index: 1;
         }
 
-        /* 🔴 แก้บั๊กเงา Swiper ตัดขอบการ์ดแหว่ง 🔴 */
         .swiper-slide-shadow-left,
         .swiper-slide-shadow-right,
         .swiper-slide-shadow-top,
@@ -69,7 +67,6 @@
             border-radius: 20px !important;
         }
 
-        /* ล็อกไพ่ใบกลางให้อยู่บนสุดเสมอ (แก้ไพ่มุด) */
         .swiper-slide-active {
             z-index: 5 !important;
         }
@@ -79,25 +76,40 @@
            ============================== */
         .rank-badge {
             position: absolute;
-            top: -65px; /* ลอยอยู่บนหัวการ์ด */
+            top: -65px; 
             left: 50%;
             width: 60px; 
             height: 60px;
-            margin-left: -30px; /* ดึงกลับให้กึ่งกลาง */
+            margin-left: -30px; 
             object-fit: contain;
             opacity: 0;
             z-index: 100;
-            transform: translateY(30px) scale(0.5); /* ซ่อนตัวอยู่ข้างล่าง */
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1.2); /* เอฟเฟกต์เด้ง */
+            transform: translateY(30px) scale(0.5); 
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1.2); 
             pointer-events: none; 
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); 
         }
 
-        /* เด้งขึ้นมาเมื่อไพ่อยู่ตรงกลาง */
         .swiper-slide-active .rank-badge {
             opacity: 1;
             transform: translateY(0) scale(1.1); 
-            transition-delay: 0.15s; 
+            animation: glowOff 1.5s cubic-bezier(0.34, 1.56, 0.64, 1.2) forwards;
+            animation-delay: 0.15s; 
+        }
+
+        /* 🔴 กำหนดสีแสงตาม Class ของการ์ด (ใส่ครบทุกสีแล้ว) 🔴 */
+        .rank-gold.swiper-slide-active .rank-badge { --rank-glow: rgba(255, 215, 0, 0.8); }
+        .rank-red.swiper-slide-active .rank-badge { --rank-glow: rgba(255, 50, 50, 0.8); }
+        .rank-blue.swiper-slide-active .rank-badge { --rank-glow: rgba(50, 150, 255, 0.8); }
+        .rank-green.swiper-slide-active .rank-badge { --rank-glow: rgba(50, 255, 50, 0.8); }
+        .rank-purple.swiper-slide-active .rank-badge { --rank-glow: rgba(180, 50, 255, 0.8); }
+        .rank-silver.swiper-slide-active .rank-badge { --rank-glow: rgba(230, 230, 230, 0.9); }
+
+        @keyframes glowOff {
+            0%   { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 0px var(--rank-glow, transparent)); }
+            20%  { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 25px var(--rank-glow, transparent)); }
+            50%  { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 10px var(--rank-glow, transparent)); }
+            100% { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 0px var(--rank-glow, transparent)); }
         }
 
         /* ==============================
@@ -107,14 +119,12 @@
             width: 100%; height: 100%;
             border-radius: 20px;
             position: relative;
-            /* 🔴 กล่องนี้ทำหน้าที่หั่นขอบภาพไม่ให้ทะลุ 20px 🔴 */
             overflow: hidden; 
             -webkit-mask-image: -webkit-radial-gradient(white, black);
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             transition: filter 0.4s ease, transform 0.4s ease;
         }
 
-        /* เอฟเฟกต์กระจกใส (Liquid Glass) */
         .card-inner::after {
             content: '';
             position: absolute;
@@ -126,7 +136,6 @@
             pointer-events: none;
         }
 
-        /* ลูกเล่นการ์ดเบลอ และเด้ง */
         .swiper-slide:not(.swiper-slide-active) .card-inner { filter: blur(3px) brightness(0.6); }
         .swiper-slide-active .card-inner { filter: blur(0px) brightness(1); transform: translateY(-25px); }
 
@@ -253,7 +262,7 @@
     </div>
 
     <div class="profile-section">
-        <img src="Profile.jpg" alt="Profile" class="profile-pic">
+        <img src="Cat.PNG" alt="Profile" class="profile-pic">
         <h1>QUNNERLA</h1>
         <p class="bio-desc">2D Animator / Motion Artist<br>Business & Commission</p>
     </div>
@@ -262,7 +271,25 @@
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
 
-                <div class="swiper-slide" data-video="Diao-chan-Elemental-Divinity.mp4">
+                <div class="swiper-slide rank-gold" data-video="Volkath-Preying-Umbra.mp4">
+                    <img class="rank-badge" src="Gold.png" alt="Rank">
+                    <div class="card-inner">
+                        <img class="image-cover" src="Volkath-Preying-Umbra.jpg" alt="Volkath">
+                        <div class="card-gradient"></div>
+                        <div class="card-details"><h3>Volkath | Preying Umbra</h3><p>Animation PNG Resolution 5K</p></div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide rank-red" data-video="Arli-Smoke-Of-Partings.mp4">
+                    <img class="rank-badge" src="Red.png" alt="Rank">
+                    <div class="card-inner">
+                        <img class="image-cover" src="Arli-Smoke-Of-Partings.jpg" alt="Arli">
+                        <div class="card-gradient"></div>
+                        <div class="card-details"><h3>Arli | Smoke Of Partings</h3><p>Animation PNG Resolution 5K</p></div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide rank-red" data-video="Diao-chan-Elemental-Divinity.mp4">
                     <img class="rank-badge" src="Red.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Diao-chan-Elemental-Divinity.jpg" alt="Diao Chan">
@@ -271,7 +298,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Rouie-Glazed-World.mp4">
+                <div class="swiper-slide rank-blue" data-video="Rouie-Glazed-World.mp4">
                     <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Rouie-Glazed-World.jpg" alt="Rouie">
@@ -280,7 +307,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Little-Mirage.mp4">
+                <div class="swiper-slide rank-blue" data-video="Little-Mirage.mp4">
                     <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Little-Mirage.jpg" alt="Little Mirage">
@@ -289,7 +316,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Nymph-Gardener.mp4">
+                <div class="swiper-slide rank-red" data-video="Nymph-Gardener.mp4">
                     <img class="rank-badge" src="Red.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Nymph-Gardener.jpg" alt="Nymph">
@@ -298,7 +325,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Veera-Melody-Love.mp4">
+                <div class="swiper-slide rank-blue" data-video="Veera-Melody-Love.mp4">
                     <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Veera-Melody-Love.jpg" alt="Veera">
@@ -307,7 +334,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Aya-Cinnamoroll-Dream.mp4">
+                <div class="swiper-slide rank-blue" data-video="Aya-Cinnamoroll-Dream.mp4">
                     <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Aya-Cinnamoroll-Dream.jpg" alt="Aya">
@@ -316,7 +343,7 @@
                     </div>
                 </div>
                 
-                <div class="swiper-slide" data-video="Natalya-Kuromi-Heart.mp4">
+                <div class="swiper-slide rank-purple" data-video="Natalya-Kuromi-Heart.mp4">
                     <img class="rank-badge" src="Purple.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Natalya-Kuromi-Heart.jpg" alt="Natalya">
@@ -325,7 +352,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Tulen-Gojo-Satoru.mp4">
+                <div class="swiper-slide rank-red" data-video="Tulen-Gojo-Satoru.mp4">
                     <img class="rank-badge" src="Red.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Tulen-Gojo-Satoru.jpg" alt="Tulen">
@@ -334,7 +361,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Raz-Super-Striker.mp4">
+                <div class="swiper-slide rank-red" data-video="Raz-Super-Striker.mp4">
                     <img class="rank-badge" src="Red.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Raz-Super-Striker.jpg" alt="Raz">
@@ -343,7 +370,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Sephera-Western-Regions-Stormy.mp4">
+                <div class="swiper-slide rank-red" data-video="Sephera-Western-Regions-Stormy.mp4">
                     <img class="rank-badge" src="Red.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Sephera-Western-Regions-Stormy.jpg" alt="Sephera">
@@ -352,7 +379,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Iggy-Rimuru-Tempest.mp4">
+                <div class="swiper-slide rank-red" data-video="Iggy-Rimuru-Tempest.mp4">
                     <img class="rank-badge" src="Red.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Iggy-Rimuru-Tempest.jpg" alt="Iggy">
@@ -361,7 +388,7 @@
                     </div>
                 </div>
                 
-                <div class="swiper-slide" data-video="Tara-Shion.mp4">
+                <div class="swiper-slide rank-blue" data-video="Tara-Shion.mp4">
                     <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Tara-Shion.jpg" alt="Tara">
@@ -370,7 +397,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Qi-Milim-Nava.mp4">
+                <div class="swiper-slide rank-blue" data-video="Qi-Milim-Nava.mp4">
                     <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Qi-Milim-Nava.jpg" alt="Qi">
@@ -379,7 +406,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Nakroth-Stellar-Troupe.mp4">
+                <div class="swiper-slide rank-red" data-video="Nakroth-Stellar-Troupe.mp4">
                     <img class="rank-badge" src="Red.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Nakroth-Stellar-Troupe.jpg" alt="Nakroth">
@@ -388,7 +415,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Violet-Demonic-morphed.mp4">
+                <div class="swiper-slide rank-green" data-video="Violet-Demonic-morphed.mp4">
                     <img class="rank-badge" src="Green.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Violet-Demonic-morphed.jpg" alt="Violet">
@@ -397,7 +424,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Frieren.mp4">
+                <div class="swiper-slide rank-purple" data-video="Frieren.mp4">
                     <img class="rank-badge" src="Purple.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Frieren.jpg" alt="Frieren">
@@ -406,7 +433,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Xi-Shi-Lovesickness.mp4">
+                <div class="swiper-slide rank-purple" data-video="Xi-Shi-Lovesickness.mp4">
                     <img class="rank-badge" src="Purple.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Xi-Shi-Lovesickness.jpg" alt="Xi Shi">
@@ -415,7 +442,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Liliana-Witching-Hour.mp4">
+                <div class="swiper-slide rank-silver" data-video="Liliana-Witching-Hour.mp4">
                     <img class="rank-badge" src="Silver.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Liliana-Witching-Hour.jpg" alt="Liliana">
@@ -424,7 +451,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Murad-Moon-Chuser.mp4">
+                <div class="swiper-slide rank-purple" data-video="Murad-Moon-Chuser.mp4">
                     <img class="rank-badge" src="Purple.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Murad-Moon-Chuser.jpg" alt="Murad">
@@ -433,7 +460,7 @@
                     </div>
                 </div>
                 
-                <div class="swiper-slide" data-video="Hayate-Kid-the-Phantom.mp4">
+                <div class="swiper-slide rank-purple" data-video="Hayate-Kid-the-Phantom.mp4">
                     <img class="rank-badge" src="Purple.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Hayate-Kid-the-Phantom.jpg" alt="Hayate">
@@ -442,7 +469,7 @@
                     </div>
                 </div>
                 
-                <div class="swiper-slide" data-video="Valhien-Dimension-Breaker.mp4">
+                <div class="swiper-slide rank-green" data-video="Valhien-Dimension-Breaker.mp4">
                     <img class="rank-badge" src="Green.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Valhien-Dimension-Breaker.jpg" alt="Valhien">
@@ -451,7 +478,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide" data-video="Airi-Witching-Hour.mp4">
+                <div class="swiper-slide rank-silver" data-video="Airi-Witching-Hour.mp4">
                     <img class="rank-badge" src="Silver.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Airi-Witching-Hour.jpg" alt="Airi">
@@ -460,7 +487,7 @@
                     </div>
                 </div>
                 
-                <div class="swiper-slide" data-video="Buterfly-EVO.mp4">
+                <div class="swiper-slide rank-silver" data-video="Buterfly-EVO.mp4">
                     <img class="rank-badge" src="Silver.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Buterfly-EVO.jpg" alt="Butterfly">
@@ -484,11 +511,10 @@
             grabCursor: true,
             centeredSlides: true,
             slidesPerView: "auto",
-            initialSlide: 1, 
+            initialSlide: 0, 
             slideToClickedSlide: true,
             creativeEffect: {
                 limitProgress: 3, 
-                /* 🔴 กดไพ่ใบข้างๆ ลง และจมไปหลังแกน Z เพื่อให้ไพ่ตรงกลางอยู่บนสุดเสมอ 🔴 */
                 prev: { translate: ["-60%", "15%", -400], rotate: [0, 0, -15], origin: "bottom center" },
                 next: { translate: ["60%", "15%", -400], rotate: [0, 0, 15], origin: "bottom center" },
             },
