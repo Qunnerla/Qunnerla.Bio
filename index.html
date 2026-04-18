@@ -96,8 +96,9 @@
 
         .swiper { width: 100%; padding: 70px 0 60px 0; overflow: visible; }
 
+        /* การ์ดเริ่มต้นสำหรับ PC จอใหญ่ */
         .swiper-slide {
-            width: 280px; height: 420px;
+            width: 300px; height: 450px; 
             background: transparent !important; 
             overflow: visible !important; 
             z-index: 1;
@@ -192,52 +193,57 @@
            ========================================= */
         .collection-badge {
             display: inline-block;
-            padding: 4px 30px 4px 8px; /* พื้นที่ด้านขวาเว้นไว้ให้เฟดกลืนไปกับความมืด */
+            padding: 4px 30px 4px 8px;
             margin-bottom: 8px;
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border-radius: 0 4px 4px 0; /* ลบมุมแค่ฝั่งขวา */
+            border-radius: 0 4px 4px 0;
             color: #fff;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
         }
 
-        /* ป้าย Newest Collection (แถบทอง เฟดซ้ายไปขวา) */
         .badge-new {
             background: linear-gradient(90deg, rgba(255, 180, 0, 0.85) 0%, rgba(255, 180, 0, 0) 100%);
-            border-left: 3px solid #FFD700; /* เส้นขอบทองเข้มด้านซ้าย */
+            border-left: 3px solid #FFD700; 
         }
 
-        /* ป้าย Past Collection (แถบขาวสว่าง เฟดซ้ายไปขวา) */
         .badge-past {
             background: linear-gradient(90deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
-            border-left: 3px solid #FFFFFF; /* เส้นขอบขาวสว่างด้านซ้าย */
+            border-left: 3px solid #FFFFFF; 
         }
 
         /* =========================================
-           📱 8. การตั้งค่ารองรับหน้าจอมือถือ
+           📱 8. การตั้งค่ารองรับหน้าจอ (Responsive)
            ========================================= */
+        
+        /* แท็บเล็ต (iPad) */
         @media (max-width: 1024px) {
-            .swiper-slide { width: 260px; height: 390px; }
+            .swiper-slide { width: 280px; height: 420px; }
             h1 { font-size: 22px; }
         }
 
+        /* สมาร์ทโฟน (Mobile) */
         @media (max-width: 768px) {
-            .swiper-slide { width: 220px; height: 330px; }
-            .profile-pic { width: 85px; height: 85px; }
+            .swiper-slide { width: 250px; height: 375px; } /* ปรับสัดส่วนให้กว้างขึ้น ไม่บีบแล้ว */
+            .profile-pic { width: 90px; height: 90px; }
             h1 { font-size: 20px; }
             .card-details h3 { font-size: 16px; }
             .card-details p { font-size: 10px; }
+            .collection-badge { padding: 3px 20px 3px 6px; font-size: 9px; margin-bottom: 6px; }
             .swiper-slide-active .card-details { bottom: 15px; }
-            .rank-badge { top: -55px; width: 50px; height: 50px; margin-left: -25px; } 
+            .rank-badge { top: -50px; width: 55px; height: 55px; margin-left: -27.5px; } 
+            
+            /* ลดความกว้างปุ่มลิงก์บนมือถือให้พอดีขอบ */
+            .links-container { padding: 0 20px 50px 20px; }
         }
 
         /* =========================================
-           🔗 9. กล่องปุ่มลิงก์โซเชียล (รองรับรูปภาพ + Emoji)
+           🔗 9. กล่องปุ่มลิงก์โซเชียล
            ========================================= */
         .links-container {
-            width: 100%; max-width: 500px; 
+            width: 100%; max-width: 450px; 
             display: flex; flex-direction: column; gap: 12px;
             padding: 0 20px 60px 20px; z-index: 10; box-sizing: border-box;
         }
@@ -642,8 +648,9 @@
             slideToClickedSlide: true,
             creativeEffect: {
                 limitProgress: 3, 
-                prev: { translate: ["-60%", "15%", -400], rotate: [0, 0, -15], origin: "bottom center" },
-                next: { translate: ["60%", "15%", -400], rotate: [0, 0, 15], origin: "bottom center" },
+                /* ปรับองศาการซ้อนกันให้กางออกสมูทขึ้น ไม่เบียดกันเกินไป */
+                prev: { translate: ["-65%", "10%", -400], rotate: [0, 0, -8], origin: "bottom center" },
+                next: { translate: ["65%", "10%", -400], rotate: [0, 0, 8], origin: "bottom center" },
             },
             keyboard: { enabled: true }
         });
