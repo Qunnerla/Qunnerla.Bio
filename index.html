@@ -94,7 +94,7 @@
         }
 
         /* =========================================
-           🃏 โครงสร้างการ์ด (Optimized)
+           🃏 โครงสร้างการ์ด
            ========================================= */
         .swiper-container-wrapper {
             width: 100%; max-width: 1200px; margin-top: 10px; padding-bottom: 20px; overflow: visible;
@@ -108,7 +108,6 @@
             background: transparent !important; 
             overflow: visible !important; 
             z-index: 1;
-            /* ล็อค GPU และแก้บัคไพ่กระพริบดำบน Android WebView */
             transform: translateZ(0); 
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
@@ -116,7 +115,7 @@
         .swiper-slide-active { z-index: 5 !important; }
 
         /* =========================================
-           🌟 ระบบป้ายยศแบบใหม่ (No Filter Drop-shadow) ลื่นปรื๊ด 100%
+           🌟 ระบบป้ายยศแบบใหม่ (No Filter Drop-shadow)
            ========================================= */
         .rank-badge-wrapper {
             position: absolute; top: -65px; left: 50%; width: 60px; height: 60px;
@@ -135,24 +134,33 @@
             transform: translate(-50%, -50%); border-radius: 50%;
             background: var(--rank-glow);
             box-shadow: 0 0 35px 20px var(--rank-glow);
-            opacity: 0; transition: opacity 0.8s ease;
+            opacity: 0;
             z-index: 1;
         }
         .swiper-slide-active .rank-glow-bg {
-            opacity: 0.8; /* ความสว่างของแสง */
+            /* 👇 NEW Pulse animation that fades in then fades out */
+            animation: glowPulse 1.5s ease forwards;
+        }
+
+        /* 👇 NEW Animation keyframes for pulsing glow */
+        @keyframes glowPulse {
+            0%   { opacity: 0; }
+            40%  { opacity: 0.7; } /* Max brightness (reduced vividness) */
+            70%  { opacity: 0.7; } /* Hold max brightness */
+            100% { opacity: 0; }   /* Fade out */
         }
 
         .rank-badge {
             width: 100%; height: 100%; object-fit: contain; position: relative; z-index: 2;
         }
 
-        /* กำหนดสีแสง */
-        .rank-gold { --rank-glow: #ffd700; }
-        .rank-red { --rank-glow: #ff3232; }
-        .rank-blue { --rank-glow: #3296ff; }
-        .rank-green { --rank-glow: #32ff32; }
-        .rank-purple { --rank-glow: #b432ff; }
-        .rank-silver { --rank-glow: #e6e6e6; }
+        /* Softer Color variables for rank-glow-bg (Request 3 - reduce vividness) */
+        .rank-gold { --rank-glow: rgba(218, 165, 32, 0.7); } /* Soft Gold (Goldenrod) */
+        .rank-red { --rank-glow: rgba(178, 34, 34, 0.7); }   /* Soft Red (Firebrick) */
+        .rank-blue { --rank-glow: rgba(65, 105, 225, 0.7); } /* Soft Blue (RoyalBlue) */
+        .rank-green { --rank-glow: rgba(46, 139, 87, 0.7); }  /* Soft Green (SeaGreen) */
+        .rank-purple { --rank-glow: rgba(138, 43, 226, 0.7); } /* Soft Purple (BlueViolet) */
+        .rank-silver { --rank-glow: rgba(169, 169, 169, 0.7); } /* Soft Silver (DarkGray) */
 
         /* =========================================
            🖼️ เลเยอร์ตัวการ์ด (ไร้เงาเบลอ ไร้มาส์ก)
@@ -160,9 +168,14 @@
         .card-inner {
             width: 100%; height: 100%; border-radius: 20px;
             position: relative; overflow: hidden; 
-            background-color: #1a1a1a; /* ใส่สีพื้นหลังกันบัคไพ่ดำ */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6); /* ใช้เงาธรรมดาเบาๆ */
+            background-color: #1a1a1a; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             transition: transform 0.4s ease;
+            /* 👇 NEW Fix for chipped edges on mobile (Request 1) */
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            /* 👇 NEW Better aliasing for overlays on mobile WebView (Request 2) */
+            -webkit-filter: blur(0px);
+            will-change: transform; /* Force hardware acceleration */
         }
         .swiper-slide-active .card-inner { 
             transform: translateY(-25px); 
@@ -173,8 +186,9 @@
             position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.6); z-index: 2;
             transition: opacity 0.4s ease; pointer-events: none;
+            will-change: opacity;
         }
-        .swiper-slide-active .card-overlay { opacity: 0; } /* ใบหน้าสุดใสปิ๊ง */
+        .swiper-slide-active .card-overlay { opacity: 0; } 
 
         /* ขอบไฮไลท์บางๆ */
         .card-inner::after {
@@ -187,6 +201,8 @@
         .image-cover {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: block; object-fit: cover; object-position: center center; 
+            /* 👇 Slight scale to ensure cover, helps mask chipped edges on some engines */
+            transform: scale(1.02);
             z-index: 1;
         }
 
@@ -194,6 +210,7 @@
             position: absolute; bottom: 0; left: 0; width: 100%; height: 60%;
             background: linear-gradient(transparent, rgba(0,0,0,0.95)); z-index: 3;
             opacity: 0; transition: opacity 0.4s ease;
+            will-change: opacity;
         }
         .swiper-slide-active .card-gradient { opacity: 1; }
 
@@ -705,7 +722,7 @@
             <img src="icon-line.png" class="btn-icon" alt="Line"> ติดต่อ Line Group
         </a>
         <a href="https://vt.tiktok.com/ZS5BqLhsJ/" class="link-btn">
-            <span class="icon">💌</span> MY 2025 WORK
+            <span class="icon">💌</span> MY 20workWORK
         </a>
         <a href="#" class="link-btn">
             <span class="icon">👉</span> Wallpaper Live
@@ -730,6 +747,9 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script>
+        // ====================================================
+        // การตั้งค่า Swiper (TikTok WebView Optimized)
+        // ====================================================
         const slideElements = document.querySelectorAll('.swiper-slide');
         const totalSlides = slideElements.length;
 
@@ -743,9 +763,7 @@
             
             slideToClickedSlide: true,
             creativeEffect: {
-                /* 💡 ลดการโชว์ไพ่ด้านหลังเหลือ 2 ใบ ช่วยลดการประมวลผล 3D บน WebView ได้มหาศาล */
                 limitProgress: 2, 
-                /* 💡 ปรับการซ้อนไพ่ให้กินสเปคน้อยลง ตัดองศาแนวลึก (-400) ออกนิดหน่อย */
                 prev: { translate: ["-60%", "10%", -250], rotate: [0, 0, -5], origin: "bottom center" },
                 next: { translate: ["60%", "10%", -250], rotate: [0, 0, 5], origin: "bottom center" },
             },
@@ -761,7 +779,7 @@
         swiper.autoplay.stop();
 
         setTimeout(() => {
-            swiper.slideTo(0, 2000); // 💡 ปรับสปีดเป็น 2.0 วินาที ให้สมูทขึ้นบนมือถือระดับกลาง
+            swiper.slideTo(0, 2000); 
 
             swiper.once('slideChangeTransitionEnd', () => {
                 if(swiper.activeIndex === 0) {
