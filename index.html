@@ -4,100 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUNNERLA - Bio</title>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
     <style>
-        /* ==============================
-           1. ตั้งค่าพื้นฐาน (Bio Style)
-           ============================== */
+        /* =========================================
+           🌓 0. ระบบจัดการสีธีม (Dark / Light Mode)
+           ========================================= */
+        :root {
+            --bg-color: #0d0d0d;
+            --text-color: #ffffff;
+            --desc-color: #888888;
+            --btn-bg: rgba(255, 255, 255, 0.05);
+            --btn-text: #ffffff;
+            --btn-border: rgba(255, 255, 255, 0.1);
+            --btn-hover: rgba(255, 255, 255, 0.15);
+            --profile-border: #333;
+        }
+
+        body.light-mode {
+            --bg-color: #f2f2f2;
+            --text-color: #1a1a1a;
+            --desc-color: #666666;
+            --btn-bg: #ffffff;
+            --btn-text: #333333;
+            --btn-border: #e0e0e0;
+            --btn-hover: #f9f9f9;
+            --profile-border: #e0e0e0;
+        }
+
+        /* =========================================
+           📌 1. ตั้งค่าโครงสร้างพื้นฐานของหน้าเว็บ
+           ========================================= */
         body {
             margin: 0; padding: 0;
             min-height: 100vh;
-            background-color: #0d0d0d;
+            background-color: var(--bg-color);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #fff;
+            color: var(--text-color);
             overflow-x: hidden;
             display: flex; flex-direction: column; align-items: center;
+            transition: background-color 0.3s ease, color 0.3s ease; 
         }
 
-        /* ==============================
-           2. ส่วนโปรไฟล์
-           ============================== */
+        /* 🔘 ปุ่มกดสลับ Dark/Light Mode มุมซ้ายบน */
+        .theme-toggle {
+            position: absolute;
+            top: 20px; left: 20px;
+            width: 45px; height: 45px;
+            background: var(--btn-bg);
+            border: 1px solid var(--btn-border);
+            border-radius: 50%;
+            font-size: 20px;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .theme-toggle:hover { transform: scale(1.1); }
+
+        /* =========================================
+           👤 2. ส่วนแสดงโปรไฟล์
+           ========================================= */
         .profile-section {
             width: 100%; display: flex; flex-direction: column; align-items: center;
-            padding-top: 40px; z-index: 10;
+            padding-top: 50px; z-index: 10;
         }
 
         .profile-pic {
             width: 100px; height: 100px;
             border-radius: 50%; object-fit: cover;
-            border: 2px solid #333; margin-bottom: 15px;
+            border: 2px solid var(--profile-border); margin-bottom: 15px;
             background-color: #222; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         h1 { margin: 0; font-size: 24px; letter-spacing: 2px; }
         p.bio-desc {
-            color: #888; font-size: 14px; text-align: center;
+            color: var(--desc-color); font-size: 14px; text-align: center;
             margin-top: 5px; margin-bottom: 10px; line-height: 1.5;
         }
 
-        /* ==============================
-           3. กรอบพัดไพ่
-           ============================== */
+        /* =========================================
+           🃏 3. โครงสร้างกรอบสไลด์การ์ด
+           ========================================= */
         .swiper-container-wrapper {
             width: 100%; max-width: 1200px;
-            margin-top: 20px; 
-            padding-bottom: 40px;
+            margin-top: 10px; 
+            padding-bottom: 20px;
         }
 
-        .swiper { width: 100%; padding: 80px 0 60px 0; overflow: visible; }
+        .swiper { width: 100%; padding: 70px 0 60px 0; overflow: visible; }
 
         .swiper-slide {
             width: 280px; height: 420px;
             background: transparent !important; 
             overflow: visible !important; 
             z-index: 1;
+            transform: translateZ(0);
         }
 
-        .swiper-slide-shadow-left,
-        .swiper-slide-shadow-right,
-        .swiper-slide-shadow-top,
-        .swiper-slide-shadow-bottom,
-        .swiper-slide-shadow {
-            border-radius: 20px !important;
-        }
+        .swiper-slide-active { z-index: 5 !important; }
 
-        .swiper-slide-active {
-            z-index: 5 !important;
-        }
-
-        /* ==============================
-           🌟 4. เลเยอร์ตราสัญลักษณ์ (เม็ด) 🌟
-           ============================== */
+        /* =========================================
+           🌟 4. ระบบเลเยอร์ตราสัญลักษณ์ระดับ (Rank Badge)
+           ========================================= */
         .rank-badge {
             position: absolute;
-            top: -65px; 
-            left: 50%;
-            width: 60px; 
-            height: 60px;
-            margin-left: -30px; 
-            object-fit: contain;
-            opacity: 0;
-            z-index: 100;
+            top: -65px; left: 50%; width: 60px; height: 60px;
+            margin-left: -30px; object-fit: contain; opacity: 0; z-index: 100;
             transform: translateY(30px) scale(0.5); 
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1.2); 
-            pointer-events: none; 
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); 
+            pointer-events: none; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); 
+            will-change: transform, opacity, filter;
         }
 
         .swiper-slide-active .rank-badge {
-            opacity: 1;
-            transform: translateY(0) scale(1.1); 
-            animation: glowOff 1.5s cubic-bezier(0.34, 1.56, 0.64, 1.2) forwards;
-            animation-delay: 0.15s; 
+            opacity: 1; transform: translateY(0) scale(1.1); 
+            animation: glowOff 1.5s cubic-bezier(0.34, 1.56, 0.64, 1.2) forwards; animation-delay: 0.15s; 
         }
 
-        /* 🔴 กำหนดสีแสงตาม Class ของการ์ด (ใส่ครบทุกสีแล้ว) 🔴 */
         .rank-gold.swiper-slide-active .rank-badge { --rank-glow: rgba(255, 215, 0, 0.8); }
         .rank-red.swiper-slide-active .rank-badge { --rank-glow: rgba(255, 50, 50, 0.8); }
         .rank-blue.swiper-slide-active .rank-badge { --rank-glow: rgba(50, 150, 255, 0.8); }
@@ -112,70 +138,86 @@
             100% { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 0px var(--rank-glow, transparent)); }
         }
 
-        /* ==============================
-           5. เลเยอร์การ์ด (โครงการ์ด + Liquid Glass)
-           ============================== */
+        /* =========================================
+           🖼️ 5. เลเยอร์ตัวการ์ด (Card Inner)
+           ========================================= */
         .card-inner {
-            width: 100%; height: 100%;
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden; 
+            width: 100%; height: 100%; border-radius: 20px;
+            position: relative; overflow: hidden; 
             -webkit-mask-image: -webkit-radial-gradient(white, black);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             transition: filter 0.4s ease, transform 0.4s ease;
+            will-change: transform, filter;
         }
 
         .card-inner::after {
-            content: '';
-            position: absolute;
+            content: ''; position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.25);
             background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.05) 100%);
-            z-index: 10;
-            pointer-events: none;
+            z-index: 10; pointer-events: none;
         }
 
         .swiper-slide:not(.swiper-slide-active) .card-inner { filter: blur(3px) brightness(0.6); }
         .swiper-slide-active .card-inner { filter: blur(0px) brightness(1); transform: translateY(-25px); }
 
         .image-cover {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            display: block;
-            object-fit: cover;
-            object-position: center center; 
-            transform: scale(1.02); 
-            z-index: 1;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: block; object-fit: cover; object-position: center center; 
+            transform: scale(1.02); z-index: 1;
         }
 
         .card-gradient {
-            position: absolute; bottom: 0; left: 0;
-            width: 100%; height: 60%;
-            background: linear-gradient(transparent, rgba(0,0,0,0.95));
-            z-index: 3;
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 60%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95)); z-index: 3;
             opacity: 0; transition: opacity 0.4s ease;
         }
         .swiper-slide-active .card-gradient { opacity: 1; }
 
-        /* ==============================
-           6. รายละเอียดมุมซ้ายล่าง
-           ============================== */
+        /* =========================================
+           📝 6. รายละเอียดและชื่อผลงาน
+           ========================================= */
         .card-details {
-            position: absolute; left: 15px; right: 15px;
-            bottom: -100px; 
-            z-index: 4; text-align: left;
-            opacity: 0; transition: all 0.4s ease;
-            pointer-events: none;
+            position: absolute; left: 15px; right: 15px; bottom: -100px; 
+            z-index: 4; text-align: left; opacity: 0; transition: all 0.4s ease; pointer-events: none;
+            color: #fff; 
         }
-        
+
         .swiper-slide-active .card-details { bottom: 20px; opacity: 1; }
         .card-details h3 { margin: 0 0 5px 0; font-size: 20px; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
-        .card-details p { margin: 0; font-size: 11px; color: #ccc; line-height: 1.5; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
+        .card-details p { margin: 0; font-size: 11px; color: #ddd; line-height: 1.5; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
 
-        /* ==============================
-           📱 การตั้งค่ารองรับหน้าจอ
-           ============================== */
+        /* =========================================
+           🏷️ 7. ป้ายกำกับคอลเลกชัน (Collection Badge)
+           ========================================= */
+        .collection-badge {
+            display: inline-block;
+            padding: 4px 30px 4px 8px; /* พื้นที่ด้านขวาเว้นไว้ให้เฟดกลืนไปกับความมืด */
+            margin-bottom: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 0 4px 4px 0; /* ลบมุมแค่ฝั่งขวา */
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+        }
+
+        /* ป้าย Newest Collection (แถบทอง เฟดซ้ายไปขวา) */
+        .badge-new {
+            background: linear-gradient(90deg, rgba(255, 180, 0, 0.85) 0%, rgba(255, 180, 0, 0) 100%);
+            border-left: 3px solid #FFD700; /* เส้นขอบทองเข้มด้านซ้าย */
+        }
+
+        /* ป้าย Past Collection (แถบขาวสว่าง เฟดซ้ายไปขวา) */
+        .badge-past {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+            border-left: 3px solid #FFFFFF; /* เส้นขอบขาวสว่างด้านซ้าย */
+        }
+
+        /* =========================================
+           📱 8. การตั้งค่ารองรับหน้าจอมือถือ
+           ========================================= */
         @media (max-width: 1024px) {
             .swiper-slide { width: 260px; height: 390px; }
             h1 { font-size: 22px; }
@@ -191,75 +233,49 @@
             .rank-badge { top: -55px; width: 50px; height: 50px; margin-left: -25px; } 
         }
 
-        /* ==============================
-           7. ปุ่มติดต่อ Line
-           ============================== */
-        .contact-section {
-            width: 100%; display: flex; justify-content: center;
-            padding-bottom: 50px; z-index: 10;
+        /* =========================================
+           🔗 9. กล่องปุ่มลิงก์โซเชียล (รองรับรูปภาพ + Emoji)
+           ========================================= */
+        .links-container {
+            width: 100%; max-width: 500px; 
+            display: flex; flex-direction: column; gap: 12px;
+            padding: 0 20px 60px 20px; z-index: 10; box-sizing: border-box;
         }
 
         .link-btn {
-            display: block; width: 100%; max-width: 320px;
-            background: rgba(0, 195, 0, 0.1);
-            color: #00c300; text-decoration: none;
-            padding: 15px 20px; border-radius: 30px;
-            text-align: center; font-weight: bold;
-            border: 1px solid rgba(0, 195, 0, 0.3);
-            backdrop-filter: blur(10px); transition: all 0.3s ease;
-        }
-        .link-btn:hover { background: rgba(0, 195, 0, 0.2); transform: translateY(-2px); }
-
-        /* ==============================
-           🔴 8. กล่องเล่นวิดีโอ (Video Modal) 🔴
-           ============================== */
-        .video-modal {
-            display: none; position: fixed; z-index: 9999;
-            left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            justify-content: center; align-items: center; flex-direction: column;
-            opacity: 0; transition: opacity 0.3s ease;
-        }
-        .video-modal.active { display: flex; opacity: 1; }
-        
-        .modal-content {
-            width: 95%; max-width: 1000px; 
-            background: #000; border-radius: 10px; overflow: hidden;
-            position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.8);
-        }
-        
-        .modal-content video { width: 100%; display: block; max-height: 85vh; }
-
-        .watermark {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%) rotate(-25deg);
-            color: rgba(255, 255, 255, 0.3); 
-            font-size: 4vw; font-weight: 900; letter-spacing: 5px;
-            text-transform: uppercase; pointer-events: none; z-index: 1000;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); white-space: nowrap;
-            user-select: none; -webkit-user-select: none;
+            display: flex; align-items: center; justify-content: center; position: relative;
+            width: 100%; background: var(--btn-bg); color: var(--btn-text);
+            text-decoration: none; padding: 16px 20px; border-radius: 30px;
+            font-size: 15px; font-weight: 600; border: 1px solid var(--btn-border);
+            transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
 
-        @media (max-width: 768px) { .watermark { font-size: 6vw; } }
+        .link-btn:hover { background: var(--btn-hover); transform: scale(1.02); }
 
-        .close-btn {
-            position: absolute; top: 20px; right: 30px; color: white; font-size: 50px; font-weight: bold;
-            cursor: pointer; z-index: 10000; transition: 0.3s; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        .link-btn .icon {
+            position: absolute; left: 20px; font-size: 22px;
         }
-        .close-btn:hover { color: #ff416c; transform: scale(1.1); }
 
+        .link-btn .btn-icon {
+            position: absolute; 
+            left: 20px; 
+            width: 24px; 
+            height: 24px; 
+            object-fit: contain; 
+            border-radius: 4px; 
+        }
+
+        .link-btn.line-btn {
+            color: #00c300; background: rgba(0, 195, 0, 0.05); border-color: rgba(0, 195, 0, 0.2);
+        }
+        body.light-mode .link-btn.line-btn {
+            background: #ffffff; border-color: #00c300;
+        }
     </style>
 </head>
 <body>
 
-    <div class="video-modal" id="videoModal">
-        <span class="close-btn" id="closeModal">&times;</span>
-        <div class="modal-content">
-            <video id="modalVideo" controls playsinline autoplay></video>
-            <div class="watermark">QUNNERLA DO NOT USE</div>
-        </div>
-    </div>
+    <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme">☀️</button>
 
     <div class="profile-section">
         <img src="Cat.png" alt="Profile" class="profile-pic">
@@ -271,228 +287,315 @@
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
 
-                <div class="swiper-slide rank-gold" data-video="Volkath-Preying-Umbra.mp4">
+                <div class="swiper-slide rank-gold">
                     <img class="rank-badge" src="Gold.png" alt="Rank">
                     <div class="card-inner">
-                        <img class="image-cover" src="Volkath-Preying-Umbra.jpg" alt="Volkath">
+                        <img class="image-cover" src="Wukong-Formless.jpg" alt="Wukong">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Volkath | Preying Umbra</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-new">Newest Collection</div>
+                            <h3>Wukong | Formless</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-red" data-video="Arli-Smoke-Of-Partings.mp4">
+                <div class="swiper-slide rank-red">
+                    <img class="rank-badge" src="Red.png" alt="Rank">
+                    <div class="card-inner">
+                        <img class="image-cover" src="Volkath-Preying-Umbra.jpg" alt="Volkath">
+                        <div class="card-gradient"></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Volkath | Preying Umbra</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide rank-red">
                     <img class="rank-badge" src="Red.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Arli-Smoke-Of-Partings.jpg" alt="Arli">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Arli | Smoke Of Partings</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Arli | Smoke Of Partings</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-red" data-video="Diao-chan-Elemental-Divinity.mp4">
+                <div class="swiper-slide rank-red">
                     <img class="rank-badge" src="Red.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Diao-chan-Elemental-Divinity.jpg" alt="Diao Chan">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Diao Chan | Elemental Divinity</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Diao Chan | Elemental Divinity</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-blue" data-video="Rouie-Glazed-World.mp4">
-                    <img class="rank-badge" src="Blue.png" alt="Rank">
+                <div class="swiper-slide rank-purple">
+                    <img class="rank-badge" src="Purple.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Rouie-Glazed-World.jpg" alt="Rouie">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Rouie | Glazed World</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Rouie | Glazed World</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-blue" data-video="Little-Mirage.mp4">
-                    <img class="rank-badge" src="Blue.png" alt="Rank">
+                <div class="swiper-slide rank-purple">
+                    <img class="rank-badge" src="Purple.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Little-Mirage.jpg" alt="Little Mirage">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Little Mirage</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Little Mirage</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-red" data-video="Nymph-Gardener.mp4">
-                    <img class="rank-badge" src="Red.png" alt="Rank">
+                <div class="swiper-slide rank-purple">
+                    <img class="rank-badge" src="Purple.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Nymph-Gardener.jpg" alt="Nymph">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Nymph | Gardener</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Nymph | Gardener</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-blue" data-video="Veera-Melody-Love.mp4">
-                    <img class="rank-badge" src="Blue.png" alt="Rank">
+                <div class="swiper-slide rank-purple">
+                    <img class="rank-badge" src="Purple.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Veera-Melody-Love.jpg" alt="Veera">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Veera | Melody Love</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Veera | Melody Love</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-blue" data-video="Aya-Cinnamoroll-Dream.mp4">
-                    <img class="rank-badge" src="Blue.png" alt="Rank">
+                <div class="swiper-slide rank-purple">
+                    <img class="rank-badge" src="Purple.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Aya-Cinnamoroll-Dream.jpg" alt="Aya">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Aya | Cinnamoroll Dream</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Aya | Cinnamoroll Dream</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="swiper-slide rank-purple" data-video="Natalya-Kuromi-Heart.mp4">
+                <div class="swiper-slide rank-purple">
                     <img class="rank-badge" src="Purple.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Natalya-Kuromi-Heart.jpg" alt="Natalya">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Natalya | Kuromi Heart</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Natalya | Kuromi Heart</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-red" data-video="Tulen-Gojo-Satoru.mp4">
-                    <img class="rank-badge" src="Red.png" alt="Rank">
+                <div class="swiper-slide rank-purple">
+                    <img class="rank-badge" src="Purple.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Tulen-Gojo-Satoru.jpg" alt="Tulen">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Tulen | Gojo Satoru</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Tulen | Gojo Satoru</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-red" data-video="Raz-Super-Striker.mp4">
-                    <img class="rank-badge" src="Red.png" alt="Rank">
+                <div class="swiper-slide rank-Blue">
+                    <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Raz-Super-Striker.jpg" alt="Raz">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Raz | Super Striker</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Raz | Super Striker</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-red" data-video="Sephera-Western-Regions-Stormy.mp4">
-                    <img class="rank-badge" src="Red.png" alt="Rank">
+                <div class="swiper-slide rank-Blue">
+                    <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Sephera-Western-Regions-Stormy.jpg" alt="Sephera">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Sephera | Western Regions Stormy</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Sephera | Western Regions Stormy</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-red" data-video="Iggy-Rimuru-Tempest.mp4">
-                    <img class="rank-badge" src="Red.png" alt="Rank">
+                <div class="swiper-slide rank-Blue">
+                    <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Iggy-Rimuru-Tempest.jpg" alt="Iggy">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Iggy | Rimuru Tempest</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Iggy | Rimuru Tempest</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="swiper-slide rank-blue" data-video="Tara-Shion.mp4">
+                <div class="swiper-slide rank-blue">
                     <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Tara-Shion.jpg" alt="Tara">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Tara | Shion</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Tara | Shion</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-blue" data-video="Qi-Milim-Nava.mp4">
+                <div class="swiper-slide rank-blue">
                     <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Qi-Milim-Nava.jpg" alt="Qi">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Qi | Milim Nava</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Qi | Milim Nava</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-red" data-video="Nakroth-Stellar-Troupe.mp4">
-                    <img class="rank-badge" src="Red.png" alt="Rank">
+                <div class="swiper-slide rank-Blue">
+                    <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Nakroth-Stellar-Troupe.jpg" alt="Nakroth">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Nakroth | Stellar Troupe</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Nakroth | Stellar Troupe</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-green" data-video="Violet-Demonic-morphed.mp4">
-                    <img class="rank-badge" src="Green.png" alt="Rank">
+                <div class="swiper-slide rank-Blue">
+                    <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Violet-Demonic-morphed.jpg" alt="Violet">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Violet | Demonic morphed</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Violet | Demonic morphed</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-purple" data-video="Frieren.mp4">
-                    <img class="rank-badge" src="Purple.png" alt="Rank">
+                <div class="swiper-slide rank-Green">
+                    <img class="rank-badge" src="Green.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Frieren.jpg" alt="Frieren">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Frieren</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Frieren</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-purple" data-video="Xi-Shi-Lovesickness.mp4">
-                    <img class="rank-badge" src="Purple.png" alt="Rank">
+                <div class="swiper-slide rank-Green">
+                    <img class="rank-badge" src="Green.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Xi-Shi-Lovesickness.jpg" alt="Xi Shi">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Xi Shi | Lovesickness</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Xi Shi | Lovesickness</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-silver" data-video="Liliana-Witching-Hour.mp4">
-                    <img class="rank-badge" src="Silver.png" alt="Rank">
+                <div class="swiper-slide rank-Green">
+                    <img class="rank-badge" src="Green.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Liliana-Witching-Hour.jpg" alt="Liliana">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Liliana | Witching Hour</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Liliana | Witching Hour</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-purple" data-video="Murad-Moon-Chuser.mp4">
-                    <img class="rank-badge" src="Purple.png" alt="Rank">
+                <div class="swiper-slide rank-Green">
+                    <img class="rank-badge" src="Green.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Murad-Moon-Chuser.jpg" alt="Murad">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Murad | Moon Chuser</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Murad | Moon Chuser</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="swiper-slide rank-purple" data-video="Hayate-Kid-the-Phantom.mp4">
-                    <img class="rank-badge" src="Purple.png" alt="Rank">
+                <div class="swiper-slide rank-Silver">
+                    <img class="rank-badge" src="Silver.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Hayate-Kid-the-Phantom.jpg" alt="Hayate">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Hayate | Kid the Phantom</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Hayate | Kid the Phantom</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="swiper-slide rank-green" data-video="Valhien-Dimension-Breaker.mp4">
-                    <img class="rank-badge" src="Green.png" alt="Rank">
+                <div class="swiper-slide rank-Silver">
+                    <img class="rank-badge" src="Silver.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Valhien-Dimension-Breaker.jpg" alt="Valhien">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Valhien | Dimension Breaker</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Valhien | Dimension Breaker</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-silver" data-video="Airi-Witching-Hour.mp4">
+                <div class="swiper-slide rank-Silver">
                     <img class="rank-badge" src="Silver.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Airi-Witching-Hour.jpg" alt="Airi">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Airi | Witching Hour</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Airi | Witching Hour</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="swiper-slide rank-silver" data-video="Buterfly-EVO.mp4">
+                <div class="swiper-slide rank-Silver">
                     <img class="rank-badge" src="Silver.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Buterfly-EVO.jpg" alt="Butterfly">
                         <div class="card-gradient"></div>
-                        <div class="card-details"><h3>Butterfly | EVO</h3><p>Animation PNG Resolution 5K</p></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Butterfly | EVO</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
                     </div>
                 </div>
 
@@ -500,11 +603,35 @@
         </div>
     </div>
 
-    <div class="contact-section">
-        <a href="https://openlink.co/qunnerla" class="link-btn">💬 ติดต่อ Line Group</a>
+    <div class="links-container">
+        <a href="https://line.me/ti/p/rTGe2Fsuvz" class="link-btn line-btn">
+            <img src="icon-line.png" class="btn-icon" alt="Line"> ติดต่อ Line Group
+        </a>
+        <a href="https://vt.tiktok.com/ZS5BqLhsJ/" class="link-btn">
+            <span class="icon">💌</span> MY 2025 WORK
+        </a>
+        <a href="#" class="link-btn">
+            <span class="icon">👉</span> Wallpaper Live
+        </a>
+        <a href="#" class="link-btn">
+            <span class="icon">🔐</span> All Collections
+        </a>
+        <a href="https://www.instagram.com/knn.mt_?igsh=MTBtMThiazExaTNtZg%3D%3D&utm_source=qr" class="link-btn">
+            <img src="icon-ig.png" class="btn-icon" alt="Instagram"> Knn.mt
+        </a>
+        <a href="https://www.facebook.com/share/1DMZ56BFQy/?mibextid=wwXIfr" class="link-btn">
+            <img src="icon-fb.png" class="btn-icon" alt="Facebook"> Qunnerla
+        </a>
+        <a href="https://www.tiktok.com/@qunnerla" class="link-btn">
+            <img src="icon-tiktok.png" class="btn-icon" alt="TikTok"> qunnerla
+        </a>
+        <a href="#" class="link-btn">
+            <img src="icon-youtube.png" class="btn-icon" alt="YouTube"> QunalX
+        </a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
     <script>
         const swiper = new Swiper(".mySwiper", {
             effect: "creative",
@@ -521,34 +648,25 @@
             keyboard: { enabled: true }
         });
 
-        const videoModal = document.getElementById('videoModal');
-        const modalVideo = document.getElementById('modalVideo');
-        const closeBtn = document.getElementById('closeModal');
+        const themeBtn = document.getElementById('themeBtn');
+        const body = document.body;
 
-        swiper.on('click', function () {
-            const activeSlide = document.querySelector('.swiper-slide-active');
-            if (this.clickedSlide === activeSlide) {
-                const videoSrc = activeSlide.getAttribute('data-video');
-                if (videoSrc) {
-                    modalVideo.src = videoSrc;
-                    videoModal.classList.add('active');
-                    modalVideo.play();
-                }
-            }
-        });
-
-        function closeVideoModal() {
-            videoModal.classList.remove('active');
-            modalVideo.pause();
-            modalVideo.src = '';
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'light') {
+            body.classList.add('light-mode');
+            themeBtn.innerText = '🌙'; 
         }
 
-        closeBtn.addEventListener('click', closeVideoModal);
-        
-        videoModal.addEventListener('click', function(e) {
-            if(e.target === videoModal) closeVideoModal();
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('light-mode'); 
+            if (body.classList.contains('light-mode')) {
+                themeBtn.innerText = '🌙'; 
+                localStorage.setItem('theme', 'light'); 
+            } else {
+                themeBtn.innerText = '☀️'; 
+                localStorage.setItem('theme', 'dark'); 
+            }
         });
-
     </script>
 
 </body>
