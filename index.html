@@ -86,6 +86,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             transition: background-color 0.3s ease, border-color 0.3s ease;
             
+            /* อนิเมชันเปิดตัว */
             opacity: 0;
             animation: slideDownFade 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s forwards;
             will-change: transform, opacity;
@@ -105,6 +106,7 @@
             border: 2px solid var(--profile-border); margin-bottom: 15px;
             background-color: #222; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            /* อนิเมชันเปิดตัว */
             opacity: 0; animation: slideDownFade 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0s forwards;
             will-change: transform, opacity;
         }
@@ -129,6 +131,7 @@
             margin-top: 10px; 
             padding-bottom: 20px;
             overflow: visible;
+            /* อนิเมชันเปิดตัวการ์ด */
             opacity: 0; animation: popInFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
             will-change: transform, opacity;
         }
@@ -140,7 +143,11 @@
             background: transparent !important; 
             overflow: visible !important; 
             z-index: 1;
-            /* 🛑 ลบ transform: translateZ ออก เพื่อแก้เลเยอร์ตีกันบน Android */
+            transform: translateZ(0); 
+            
+            /* 💡 เพิ่ม 2 คำสั่งนี้ แก้บัคภาพแหว่ง/กระพริบดำเวลาปัด 3D บน Android */
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
         }
 
         .swiper-slide-active { z-index: 5 !important; }
@@ -157,6 +164,7 @@
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1.2); 
             pointer-events: none; 
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); 
+            will-change: transform, opacity, filter;
         }
 
         .swiper-slide-active .rank-badge {
@@ -185,10 +193,13 @@
         .card-inner {
             width: 100%; height: 100%; border-radius: 20px;
             position: relative; overflow: hidden; 
+            
+            /* 💡 ลบ -webkit-mask-image ออก (ตัวการทำ Android ตัดภาพแหว่ง) แล้วใส่ isolation เข้าไปแทน */
+            isolation: isolate; 
+            
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            /* 🛑 ถอด -webkit-mask-image ออก นี่คือตัวการที่ทำให้ Android ตัดไพ่หาย! */
-            /* 🛑 ถอด transform 0.4s ออก ให้ Swiper ทำงาน 3D เพียวๆ จะได้ไม่กระพริบ */
-            transition: filter 0.4s ease; 
+            transition: filter 0.4s ease, transform 0.4s ease;
+            will-change: transform, filter;
         }
 
         .card-inner::after {
@@ -199,9 +210,8 @@
             z-index: 10; pointer-events: none;
         }
 
-        /* เอฟเฟกต์เบลอ จัดเต็มเหมือนเดิม! */
         .swiper-slide:not(.swiper-slide-active) .card-inner { filter: blur(3px) brightness(0.6); }
-        .swiper-slide-active .card-inner { filter: blur(0px) brightness(1); }
+        .swiper-slide-active .card-inner { filter: blur(0px) brightness(1); transform: translateY(-25px); }
 
         .image-cover {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -277,7 +287,7 @@
         }
 
         /* =========================================
-           🔗 10. กล่องปุ่มลิงก์โซเชียล
+           🔗 10. กล่องปุ่มลิงก์โซเชียล พร้อมระบบอนิเมชัน
            ========================================= */
         .links-container {
             width: 100%; 
@@ -293,10 +303,13 @@
             width: 100%; background: var(--btn-bg); color: var(--btn-text);
             text-decoration: none; padding: 16px 20px; border-radius: 30px;
             font-size: 15px; font-weight: 600; border: 1px solid var(--btn-border);
+            
+            /* อนิเมชันเปิดตัวปุ่มลิงก์ */
             opacity: 0; animation: slideUpFade 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             will-change: transform, opacity;
         }
 
+        /* หน่วงเวลาให้ปุ่มโผล่มาไม่พร้อมกัน */
         .link-btn:nth-child(1) { animation-delay: 0.6s; }
         .link-btn:nth-child(2) { animation-delay: 0.7s; }
         .link-btn:nth-child(3) { animation-delay: 0.8s; }
@@ -309,11 +322,25 @@
         .link-btn { transition: background-color 0.3s ease, transform 0.2s ease; }
         .link-btn:active, .link-btn:hover { background: var(--btn-hover); transform: scale(0.98) !important; }
 
-        .link-btn .icon { position: absolute; left: 20px; font-size: 22px; }
-        .link-btn .btn-icon { position: absolute; left: 20px; width: 24px; height: 24px; object-fit: contain; border-radius: 4px; }
+        .link-btn .icon {
+            position: absolute; left: 20px; font-size: 22px;
+        }
 
-        .link-btn.line-btn { color: #00c300; background: rgba(0, 195, 0, 0.05); border-color: rgba(0, 195, 0, 0.2); }
-        body.light-mode .link-btn.line-btn { background: #ffffff; border-color: #00c300; }
+        .link-btn .btn-icon {
+            position: absolute; 
+            left: 20px; 
+            width: 24px; 
+            height: 24px; 
+            object-fit: contain; 
+            border-radius: 4px; 
+        }
+
+        .link-btn.line-btn {
+            color: #00c300; background: rgba(0, 195, 0, 0.05); border-color: rgba(0, 195, 0, 0.2);
+        }
+        body.light-mode .link-btn.line-btn {
+            background: #ffffff; border-color: #00c300;
+        }
     </style>
 </head>
 <body>
@@ -689,28 +716,26 @@
             
             slideToClickedSlide: true,
             creativeEffect: {
-                /* 🛑 เพิ่มลิมิตการโหลดเผื่อไว้ 4 ใบ เพื่อแก้ปัญหา Android เรนเดอร์ไพ่แหว่งไม่ทัน */
+                /* 💡 อัปเป็น 4 เผื่อการเรนเดอร์ไพ่ล่วงหน้า ป้องกันภาพเด้งโผล่แบบกระตุก */
                 limitProgress: 4, 
-                /* 🛑 เปลี่ยนจาก translateY ใน CSS มาใช้วิธีดันไพ่ให้ต่ำลงด้วย Swiper (+12%) ป้องกันเลเยอร์ชนกัน */
-                prev: { translate: ["-65%", "12%", -400], rotate: [0, 0, -8], origin: "bottom center" },
-                next: { translate: ["65%", "12%", -400], rotate: [0, 0, 8], origin: "bottom center" },
+                prev: { translate: ["-65%", "10%", -400], rotate: [0, 0, -8], origin: "bottom center" },
+                next: { translate: ["65%", "10%", -400], rotate: [0, 0, 8], origin: "bottom center" },
             },
             keyboard: { enabled: true },
             
             autoplay: {
                 delay: 1800, 
-                disableOnInteraction: false, // ปล่อยมือแล้วกลับมาออโต้เองชิวๆ
+                disableOnInteraction: false, 
             }
         });
 
-        // 🛑 สั่งให้หยุดออโต้โชว์ชั่วคราว เพื่อรอให้เล่นฉากเปิดตัวก่อน
+        // 🛑 หยุดการทำงานออโต้ชั่วคราว เพื่อเล่นอนิเมชันเริ่มแรก
         swiper.autoplay.stop();
 
         // ====================================================
         // ✨ ระบบอนิเมชันตอนเริ่มโหลดเว็บ (Intro Animation)
         // ====================================================
         setTimeout(() => {
-            // กรีดไพ่ย้อนกลับมาหน้าสุด (ความเร็ว 2.5 วิ สมูทๆ)
             swiper.slideTo(0, 2500);
 
             swiper.once('slideChangeTransitionEnd', () => {
