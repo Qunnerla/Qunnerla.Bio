@@ -54,6 +54,25 @@
             transition: background-color 0.3s ease, color 0.3s ease; 
         }
 
+        /* =========================================
+           ✨ 2. ระบบอนิเมชันเปิดตัว (Entry Animations)
+           ========================================= */
+        @keyframes slideDownFade {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popInFade {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* 🔘 ปุ่มกดสลับ Dark/Light Mode */
         .theme-toggle {
             position: absolute;
             top: 20px; left: 20px;
@@ -65,12 +84,16 @@
             display: flex; justify-content: center; align-items: center;
             cursor: pointer; z-index: 100;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            
+            /* อนิเมชันเปิดตัว */
+            opacity: 0;
+            animation: slideDownFade 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s forwards;
+            will-change: transform, opacity;
         }
-        .theme-toggle:hover { transform: scale(1.1); }
 
         /* =========================================
-           👤 2. ส่วนแสดงโปรไฟล์
+           👤 3. ส่วนแสดงโปรไฟล์
            ========================================= */
         .profile-section {
             width: 100%; display: flex; flex-direction: column; align-items: center;
@@ -83,22 +106,34 @@
             border: 2px solid var(--profile-border); margin-bottom: 15px;
             background-color: #222; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            /* อนิเมชันเปิดตัว */
+            opacity: 0; animation: slideDownFade 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0s forwards;
+            will-change: transform, opacity;
         }
 
-        h1 { margin: 0; font-size: 24px; letter-spacing: 2px; }
+        h1 { 
+            margin: 0; font-size: 24px; letter-spacing: 2px; 
+            opacity: 0; animation: slideDownFade 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s forwards;
+            will-change: transform, opacity;
+        }
         p.bio-desc {
             color: var(--desc-color); font-size: 14px; text-align: center;
             margin-top: 5px; margin-bottom: 10px; line-height: 1.5;
+            opacity: 0; animation: slideDownFade 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
+            will-change: transform, opacity;
         }
 
         /* =========================================
-           🃏 3. โครงสร้างกรอบสไลด์การ์ด
+           🃏 4. โครงสร้างกรอบสไลด์การ์ด
            ========================================= */
         .swiper-container-wrapper {
             width: 100%; max-width: 1200px;
             margin-top: 10px; 
             padding-bottom: 20px;
             overflow: visible;
+            /* อนิเมชันเปิดตัวการ์ด */
+            opacity: 0; animation: popInFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+            will-change: transform, opacity;
         }
 
         .swiper { width: 100%; padding: 70px 0 60px 0; overflow: visible; }
@@ -108,13 +143,13 @@
             background: transparent !important; 
             overflow: visible !important; 
             z-index: 1;
-            transform: translateZ(0);
+            transform: translateZ(0); 
         }
 
         .swiper-slide-active { z-index: 5 !important; }
 
         /* =========================================
-           🌟 4. ระบบเลเยอร์ตราสัญลักษณ์ระดับ (Rank Badge)
+           🌟 5. ระบบเลเยอร์ตราสัญลักษณ์ระดับ (Rank Badge)
            ========================================= */
         .rank-badge {
             --rank-glow: transparent; 
@@ -134,7 +169,6 @@
             animation-delay: 0.1s; 
         }
 
-        /* 💡 ดักชื่อคลาสทั้งตัวพิมพ์เล็กและใหญ่ พร้อมปรับแสงให้อ่อนลง (0.8) แบบต้นฉบับ */
         .rank-gold .rank-badge, .rank-Gold .rank-badge { --rank-glow: rgba(255, 215, 0, 0.8); }
         .rank-red .rank-badge, .rank-Red .rank-badge { --rank-glow: rgba(255, 50, 50, 0.8); }
         .rank-blue .rank-badge, .rank-Blue .rank-badge { --rank-glow: rgba(50, 150, 255, 0.8); }
@@ -142,7 +176,6 @@
         .rank-purple .rank-badge, .rank-Purple .rank-badge { --rank-glow: rgba(180, 50, 255, 0.8); }
         .rank-silver .rank-badge, .rank-Silver .rank-badge { --rank-glow: rgba(230, 230, 230, 0.9); }
 
-        /* 💡 อนิเมชันแสงแบบเฟดดับ สว่างวาบแล้วค่อยๆ กลืนหายไป */
         @keyframes glowFadeOut {
             0%   { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 0px transparent); }
             20%  { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 25px var(--rank-glow)); }
@@ -151,7 +184,7 @@
         }
 
         /* =========================================
-           🖼️ 5. เลเยอร์ตัวการ์ด (Card Inner)
+           🖼️ 6. เลเยอร์ตัวการ์ด (Card Inner)
            ========================================= */
         .card-inner {
             width: 100%; height: 100%; border-radius: 20px;
@@ -187,7 +220,7 @@
         .swiper-slide-active .card-gradient { opacity: 1; }
 
         /* =========================================
-           📝 6. รายละเอียดและชื่อผลงาน
+           📝 7. รายละเอียดและชื่อผลงาน
            ========================================= */
         .card-details {
             position: absolute; left: 15px; right: 15px; bottom: -100px; 
@@ -200,7 +233,7 @@
         .card-details p { margin: 0; font-size: 11px; color: #ddd; line-height: 1.5; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
 
         /* =========================================
-           🏷️ 7. ป้ายกำกับคอลเลกชัน (Collection Badge)
+           🏷️ 8. ป้ายกำกับคอลเลกชัน (Collection Badge)
            ========================================= */
         .collection-badge {
             display: inline-block;
@@ -226,9 +259,8 @@
         }
 
         /* =========================================
-           📱 8. การตั้งค่ารองรับหน้าจอ (Responsive)
+           📱 9. การตั้งค่ารองรับหน้าจอ (Responsive)
            ========================================= */
-        
         @media (max-width: 1024px) {
             .swiper-slide { width: 280px; height: 420px; }
             h1 { font-size: 22px; }
@@ -248,7 +280,7 @@
         }
 
         /* =========================================
-           🔗 9. กล่องปุ่มลิงก์โซเชียล
+           🔗 10. กล่องปุ่มลิงก์โซเชียล พร้อมระบบอนิเมชัน
            ========================================= */
         .links-container {
             width: 100%; 
@@ -264,10 +296,24 @@
             width: 100%; background: var(--btn-bg); color: var(--btn-text);
             text-decoration: none; padding: 16px 20px; border-radius: 30px;
             font-size: 15px; font-weight: 600; border: 1px solid var(--btn-border);
-            transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            
+            /* อนิเมชันเปิดตัวปุ่มลิงก์ */
+            opacity: 0; animation: slideUpFade 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            will-change: transform, opacity;
         }
 
-        .link-btn:hover { background: var(--btn-hover); transform: scale(1.02); }
+        /* หน่วงเวลาให้ปุ่มโผล่มาไม่พร้อมกัน */
+        .link-btn:nth-child(1) { animation-delay: 0.6s; }
+        .link-btn:nth-child(2) { animation-delay: 0.7s; }
+        .link-btn:nth-child(3) { animation-delay: 0.8s; }
+        .link-btn:nth-child(4) { animation-delay: 0.9s; }
+        .link-btn:nth-child(5) { animation-delay: 1.0s; }
+        .link-btn:nth-child(6) { animation-delay: 1.1s; }
+        .link-btn:nth-child(7) { animation-delay: 1.2s; }
+        .link-btn:nth-child(8) { animation-delay: 1.3s; }
+
+        .link-btn { transition: background-color 0.3s ease, transform 0.2s ease; }
+        .link-btn:active, .link-btn:hover { background: var(--btn-hover); transform: scale(0.98) !important; }
 
         .link-btn .icon {
             position: absolute; left: 20px; font-size: 22px;
@@ -650,21 +696,51 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script>
+        const slideElements = document.querySelectorAll('.swiper-slide');
+        const totalSlides = slideElements.length;
+
         const swiper = new Swiper(".mySwiper", {
             effect: "creative",
             grabCursor: true,
             centeredSlides: true,
             slidesPerView: "auto",
-            initialSlide: 0, 
+            
+            initialSlide: totalSlides - 1, 
+            
             slideToClickedSlide: true,
             creativeEffect: {
                 limitProgress: 3, 
                 prev: { translate: ["-65%", "10%", -400], rotate: [0, 0, -8], origin: "bottom center" },
                 next: { translate: ["65%", "10%", -400], rotate: [0, 0, 8], origin: "bottom center" },
             },
-            keyboard: { enabled: true }
+            keyboard: { enabled: true },
+            
+            autoplay: false 
         });
 
+        // ====================================================
+        // ✨ ระบบอนิเมชันตอนเริ่มโหลดเว็บ (Intro Animation)
+        // ====================================================
+        setTimeout(() => {
+            swiper.slideTo(0, 2500);
+
+            swiper.once('slideChangeTransitionEnd', () => {
+                if(swiper.activeIndex === 0) {
+                    swiper.params.autoplay = {
+                        delay: 1800, 
+                        // 👇 แก้ตรงนี้เป็น false ให้กลับมาเลื่อนออโต้หลังคนดูปล่อยมือ
+                        disableOnInteraction: false, 
+                        stopOnLastSlide: true 
+                    };
+                    swiper.autoplay.start();
+                }
+            });
+        }, 1200); 
+
+
+        // ====================================================
+        // ระบบปุ่มเปลี่ยนโหมดสี (Dark / Light Mode)
+        // ====================================================
         const themeBtn = document.getElementById('themeBtn');
         const body = document.body;
 
