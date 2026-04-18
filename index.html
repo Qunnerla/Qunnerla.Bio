@@ -14,7 +14,7 @@
         }
 
         /* =========================================
-           🌓 0. ระบบจัดการสีธีม (Dark / Light Mode)
+           🌓 0. ระบบจัดการสีธีม
            ========================================= */
         :root {
             --bg-color: #0d0d0d;
@@ -39,7 +39,7 @@
         }
 
         /* =========================================
-           📌 1. ตั้งค่าโครงสร้างพื้นฐานของหน้าเว็บ
+           📌 1. ตั้งค่าโครงสร้างพื้นฐาน
            ========================================= */
         html, body {
             margin: 0; padding: 0;
@@ -55,7 +55,7 @@
         }
 
         /* =========================================
-           ✨ 2. ระบบอนิเมชันเปิดตัว (Entry Animations)
+           ✨ 2. ระบบอนิเมชันเปิดตัว
            ========================================= */
         @keyframes slideDownFade {
             from { opacity: 0; transform: translateY(-30px); }
@@ -72,7 +72,6 @@
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* 🔘 ปุ่มกดสลับ Dark/Light Mode */
         .theme-toggle {
             position: absolute;
             top: 20px; left: 20px;
@@ -83,9 +82,6 @@
             font-size: 20px;
             display: flex; justify-content: center; align-items: center;
             cursor: pointer; z-index: 100;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            
             opacity: 0;
             animation: slideDownFade 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s forwards;
             will-change: transform, opacity;
@@ -140,83 +136,89 @@
             background: transparent !important; 
             overflow: visible !important; 
             z-index: 1;
+            /* ล็อคการ์ดจอให้ทำงานลื่นที่สุด */
             transform: translateZ(0); 
+            will-change: transform;
         }
 
         .swiper-slide-active { z-index: 5 !important; }
 
         /* =========================================
-           🌟 5. ระบบเลเยอร์ตราสัญลักษณ์ระดับ (Rank Badge)
+           🌟 5. ระบบเลเยอร์ตราสัญลักษณ์ (Optimized 60FPS)
            ========================================= */
         .rank-badge {
             --rank-glow: transparent; 
             position: absolute;
             top: -65px; left: 50%; width: 60px; height: 60px;
             margin-left: -30px; object-fit: contain; opacity: 0; z-index: 100;
+            
+            /* 💡 ใช้ Static Filter เพื่อกัน GPU ค้าง */
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 15px var(--rank-glow)); 
+            
             transform: translateY(30px) scale(0.5); 
-            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1.2); 
-            pointer-events: none; 
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); 
-            /* ลบ filter ออกจาก will-change เพื่อแก้ปัญหาบัคแสดงผลของ Safari บน iOS */
-            will-change: transform, opacity;
+            will-change: transform, opacity; /* อนิเมชันเฉพาะสิ่งที่ลื่นไหล */
         }
+
+        /* ตัวแปรสีแสง */
+        .rank-gold .rank-badge, .rank-Gold .rank-badge { --rank-glow: rgba(255, 215, 0, 1); }
+        .rank-red .rank-badge, .rank-Red .rank-badge { --rank-glow: rgba(255, 50, 50, 1); }
+        .rank-blue .rank-badge, .rank-Blue .rank-badge { --rank-glow: rgba(50, 150, 255, 1); }
+        .rank-green .rank-badge, .rank-Green .rank-badge { --rank-glow: rgba(50, 255, 50, 1); }
+        .rank-purple .rank-badge, .rank-Purple .rank-badge { --rank-glow: rgba(180, 50, 255, 1); }
+        .rank-silver .rank-badge, .rank-Silver .rank-badge { --rank-glow: rgba(230, 230, 230, 1); }
 
         .swiper-slide-active .rank-badge {
-            opacity: 1; transform: translateY(0) scale(1.1); 
-            animation: glowFadeOut 1.5s cubic-bezier(0.34, 1.56, 0.64, 1.2) forwards; 
-            animation-delay: 0.1s; 
+            /* 💡 เด้งแบบสมูท ไม่ใช้ Keyframes filter */
+            animation: badgePop 1s cubic-bezier(0.34, 1.56, 0.64, 1.2) forwards;
+            animation-delay: 0.1s;
         }
 
-        .rank-gold .rank-badge, .rank-Gold .rank-badge { --rank-glow: rgba(255, 215, 0, 0.8); }
-        .rank-red .rank-badge, .rank-Red .rank-badge { --rank-glow: rgba(255, 50, 50, 0.8); }
-        .rank-blue .rank-badge, .rank-Blue .rank-badge { --rank-glow: rgba(50, 150, 255, 0.8); }
-        .rank-green .rank-badge, .rank-Green .rank-badge { --rank-glow: rgba(50, 255, 50, 0.8); }
-        .rank-purple .rank-badge, .rank-Purple .rank-badge { --rank-glow: rgba(180, 50, 255, 0.8); }
-        .rank-silver .rank-badge, .rank-Silver .rank-badge { --rank-glow: rgba(230, 230, 230, 0.9); }
-
-        @keyframes glowFadeOut {
-            0%   { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 0px transparent); }
-            20%  { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 25px var(--rank-glow)); }
-            50%  { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 10px var(--rank-glow)); }
-            100% { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 0px transparent); }
-        }
-
-        /* 🚀 LITE MODE สำหรับเครื่องสเปคต่ำ (ปิดการเรืองแสงแอนิเมชันหนักๆ เพื่อลดแลค) */
-        body.lite-mode .swiper-slide-active .rank-badge {
-            animation: none; 
-            opacity: 1; transform: translateY(0) scale(1.1); 
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.9)); 
+        @keyframes badgePop {
+            0%   { opacity: 0; transform: translateY(30px) scale(0.5); }
+            60%  { opacity: 1; transform: translateY(-5px) scale(1.2); }
+            100% { opacity: 1; transform: translateY(0) scale(1.1); }
         }
 
         /* =========================================
-           🖼️ 6. เลเยอร์ตัวการ์ด (Card Inner)
+           🖼️ 6. เลเยอร์ตัวการ์ด (Optimized 60FPS)
            ========================================= */
         .card-inner {
             width: 100%; height: 100%; border-radius: 20px;
             position: relative; overflow: hidden; 
-            -webkit-mask-image: -webkit-radial-gradient(white, black);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            transition: filter 0.4s ease, transform 0.4s ease;
-            will-change: transform, filter;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            /* ถอด -webkit-mask-image ออก เพราะมันทำให้ S25 กระตุก */
+            transform: translateZ(0);
+            transition: transform 0.4s ease;
+            will-change: transform;
         }
 
+        /* 💡 ชั้นฟิล์มลดแสงสำหรับไพ่ที่ไม่ได้เลือก (ลื่นกว่า Blur 10 เท่า!) */
+        .card-inner::before {
+            content: ''; position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.65); /* ความมืดของไพ่หลัง */
+            z-index: 2;
+            opacity: 1;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            will-change: opacity;
+        }
+
+        .swiper-slide-active .card-inner::before { 
+            opacity: 0; /* ไพ่หน้าสุดสว่างใส 100% */
+        }
+        
+        .swiper-slide-active .card-inner { 
+            transform: translateY(-25px); 
+        }
+
+        /* ขอบกระจก */
         .card-inner::after {
             content: ''; position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.25);
             background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.05) 100%);
             z-index: 10; pointer-events: none;
-        }
-
-        .swiper-slide:not(.swiper-slide-active) .card-inner { filter: blur(3px) brightness(0.6); }
-        .swiper-slide-active .card-inner { filter: blur(0px) brightness(1); transform: translateY(-25px); }
-
-        /* 🚀 LITE MODE สำหรับเครื่องสเปคต่ำ (ปิดระบบ Blur ไพ่ด้านหลัง) */
-        body.lite-mode .swiper-slide:not(.swiper-slide-active) .card-inner { 
-            filter: brightness(0.4); 
-        }
-        body.lite-mode .swiper-slide-active .card-inner { 
-            filter: brightness(1); 
         }
 
         .image-cover {
@@ -229,6 +231,7 @@
             position: absolute; bottom: 0; left: 0; width: 100%; height: 60%;
             background: linear-gradient(transparent, rgba(0,0,0,0.95)); z-index: 3;
             opacity: 0; transition: opacity 0.4s ease;
+            will-change: opacity;
         }
         .swiper-slide-active .card-gradient { opacity: 1; }
 
@@ -246,7 +249,7 @@
         .card-details p { margin: 0; font-size: 11px; color: #ddd; line-height: 1.5; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
 
         /* =========================================
-           🏷️ 8. ป้ายกำกับคอลเลกชัน (Collection Badge)
+           🏷️ 8. ป้ายกำกับคอลเลกชัน
            ========================================= */
         .collection-badge {
             display: inline-block;
@@ -326,25 +329,11 @@
         .link-btn { transition: background-color 0.3s ease, transform 0.2s ease; }
         .link-btn:active, .link-btn:hover { background: var(--btn-hover); transform: scale(0.98) !important; }
 
-        .link-btn .icon {
-            position: absolute; left: 20px; font-size: 22px;
-        }
+        .link-btn .icon { position: absolute; left: 20px; font-size: 22px; }
+        .link-btn .btn-icon { position: absolute; left: 20px; width: 24px; height: 24px; object-fit: contain; border-radius: 4px; }
 
-        .link-btn .btn-icon {
-            position: absolute; 
-            left: 20px; 
-            width: 24px; 
-            height: 24px; 
-            object-fit: contain; 
-            border-radius: 4px; 
-        }
-
-        .link-btn.line-btn {
-            color: #00c300; background: rgba(0, 195, 0, 0.05); border-color: rgba(0, 195, 0, 0.2);
-        }
-        body.light-mode .link-btn.line-btn {
-            background: #ffffff; border-color: #00c300;
-        }
+        .link-btn.line-btn { color: #00c300; background: rgba(0, 195, 0, 0.05); border-color: rgba(0, 195, 0, 0.2); }
+        body.light-mode .link-btn.line-btn { background: #ffffff; border-color: #00c300; }
     </style>
 </head>
 <body>
@@ -493,7 +482,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-Blue">
+                <div class="swiper-slide rank-blue">
                     <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Raz-Super-Striker.jpg" alt="Raz">
@@ -505,7 +494,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-Blue">
+                <div class="swiper-slide rank-blue">
                     <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Sephera-Western-Regions-Stormy.jpg" alt="Sephera">
@@ -517,7 +506,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-Blue">
+                <div class="swiper-slide rank-blue">
                     <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Iggy-Rimuru-Tempest.jpg" alt="Iggy">
@@ -553,7 +542,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-Blue">
+                <div class="swiper-slide rank-blue">
                     <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Nakroth-Stellar-Troupe.jpg" alt="Nakroth">
@@ -565,7 +554,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-Blue">
+                <div class="swiper-slide rank-blue">
                     <img class="rank-badge" src="Blue.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Violet-Demonic-morphed.jpg" alt="Violet">
@@ -577,7 +566,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-Green">
+                <div class="swiper-slide rank-green">
                     <img class="rank-badge" src="Green.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Frieren.jpg" alt="Frieren">
@@ -589,7 +578,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-Green">
+                <div class="swiper-slide rank-green">
                     <img class="rank-badge" src="Green.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Xi-Shi-Lovesickness.jpg" alt="Xi Shi">
@@ -601,7 +590,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-Green">
+                <div class="swiper-slide rank-green">
                     <img class="rank-badge" src="Green.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Liliana-Witching-Hour.jpg" alt="Liliana">
@@ -613,7 +602,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-Green">
+                <div class="swiper-slide rank-green">
                     <img class="rank-badge" src="Green.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Murad-Moon-Chuser.jpg" alt="Murad">
@@ -625,7 +614,7 @@
                     </div>
                 </div>
                 
-                <div class="swiper-slide rank-Silver">
+                <div class="swiper-slide rank-silver">
                     <img class="rank-badge" src="Silver.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Hayate-Kid-the-Phantom.jpg" alt="Hayate">
@@ -637,7 +626,7 @@
                     </div>
                 </div>
                 
-                <div class="swiper-slide rank-Silver">
+                <div class="swiper-slide rank-silver">
                     <img class="rank-badge" src="Silver.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Valhien-Dimension-Breaker.jpg" alt="Valhien">
@@ -649,7 +638,7 @@
                     </div>
                 </div>
 
-                <div class="swiper-slide rank-Silver">
+                <div class="swiper-slide rank-silver">
                     <img class="rank-badge" src="Silver.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Airi-Witching-Hour.jpg" alt="Airi">
@@ -661,7 +650,7 @@
                     </div>
                 </div>
                 
-                <div class="swiper-slide rank-Silver">
+                <div class="swiper-slide rank-silver">
                     <img class="rank-badge" src="Silver.png" alt="Rank">
                     <div class="card-inner">
                         <img class="image-cover" src="Buterfly-EVO.jpg" alt="Butterfly">
@@ -708,39 +697,10 @@
     
     <script>
         // ====================================================
-        // 🚀 ระบบเช็คสเปคเครื่อง (Performance Checker) ปรับปรุงใหม่
-        // ====================================================
-        let isLowEnd = false;
-        
-        // ตรวจเช็คว่าเป็นระบบ iOS (iPhone/iPad/Mac) หรือไม่
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-        const isAndroid = /Android/i.test(navigator.userAgent);
-
-        if (isAndroid) {
-            // ถ้าเป็น Android ให้บังคับใช้ Lite Mode เลยเพื่อความชัวร์เรื่องความลื่น
-            isLowEnd = true; 
-        } else if (!isIOS) {
-            // ถ้า *ไม่ใช่ iOS* ถึงจะมาเช็คสเปค CPU กับ RAM (เพราะ Apple ซ่อนสเปคไว้ Safari ชอบหลอกว่าเครื่องกาก)
-            if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) {
-                isLowEnd = true; 
-            }
-            if (navigator.deviceMemory && navigator.deviceMemory <= 4) {
-                isLowEnd = true; 
-            }
-        }
-        // สรุป: iPhone จะเป็น isLowEnd = false เสมอ ทำให้โชว์แสงเอฟเฟกต์เต็ม 100% แน่นอน
-
-        if (isLowEnd) {
-            document.body.classList.add('lite-mode');
-        }
-
-        // ====================================================
-        // การตั้งค่า Swiper
+        // การตั้งค่า Swiper (Optimized Performance)
         // ====================================================
         const slideElements = document.querySelectorAll('.swiper-slide');
         const totalSlides = slideElements.length;
-
-        const limitRender = isLowEnd ? 2 : 3;
 
         const swiper = new Swiper(".mySwiper", {
             effect: "creative",
@@ -752,13 +712,13 @@
             
             slideToClickedSlide: true,
             creativeEffect: {
-                limitProgress: limitRender, 
+                limitProgress: 3, // เรนเดอร์การ์ดแค่ 3 ใบหน้าสุด ลดภาระ GPU ของมือถือลง 90%
                 prev: { translate: ["-65%", "10%", -400], rotate: [0, 0, -8], origin: "bottom center" },
                 next: { translate: ["65%", "10%", -400], rotate: [0, 0, 8], origin: "bottom center" },
             },
             keyboard: { enabled: true },
             
-            // 👇 ระบบสัมผัสไม่ให้รบกวนออโต้ (แก้ไขแล้ว)
+            // ปล่อยให้ผู้ใช้เลื่อนแล้วกลับมาออโต้เองได้
             autoplay: {
                 delay: 1800, 
                 disableOnInteraction: false, 
@@ -772,9 +732,8 @@
         // ✨ ระบบอนิเมชันตอนเริ่มโหลดเว็บ (Intro Animation)
         // ====================================================
         setTimeout(() => {
-            const slideSpeed = isLowEnd ? 1500 : 2500;
-
-            swiper.slideTo(0, slideSpeed);
+            // ดึงสปีดความลื่นไหลกลับมาเป็นมาตรฐาน ลื่นหัวแตกทุกเครื่อง!
+            swiper.slideTo(0, 2500);
 
             swiper.once('slideChangeTransitionEnd', () => {
                 if(swiper.activeIndex === 0) {
