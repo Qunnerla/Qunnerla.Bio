@@ -86,7 +86,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             transition: background-color 0.3s ease, border-color 0.3s ease;
             
-            /* อนิเมชันเปิดตัว */
             opacity: 0;
             animation: slideDownFade 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s forwards;
             will-change: transform, opacity;
@@ -106,7 +105,6 @@
             border: 2px solid var(--profile-border); margin-bottom: 15px;
             background-color: #222; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            /* อนิเมชันเปิดตัว */
             opacity: 0; animation: slideDownFade 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0s forwards;
             will-change: transform, opacity;
         }
@@ -131,7 +129,6 @@
             margin-top: 10px; 
             padding-bottom: 20px;
             overflow: visible;
-            /* อนิเมชันเปิดตัวการ์ด */
             opacity: 0; animation: popInFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
             will-change: transform, opacity;
         }
@@ -160,7 +157,8 @@
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1.2); 
             pointer-events: none; 
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); 
-            will-change: transform, opacity, filter;
+            /* ลบ filter ออกจาก will-change เพื่อแก้ปัญหาบัคแสดงผลของ Safari บน iOS */
+            will-change: transform, opacity;
         }
 
         .swiper-slide-active .rank-badge {
@@ -295,7 +293,7 @@
         }
 
         /* =========================================
-           🔗 10. กล่องปุ่มลิงก์โซเชียล พร้อมระบบอนิเมชัน
+           🔗 10. กล่องปุ่มลิงก์โซเชียล
            ========================================= */
         .links-container {
             width: 100%; 
@@ -312,12 +310,10 @@
             text-decoration: none; padding: 16px 20px; border-radius: 30px;
             font-size: 15px; font-weight: 600; border: 1px solid var(--btn-border);
             
-            /* อนิเมชันเปิดตัวปุ่มลิงก์ */
             opacity: 0; animation: slideUpFade 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             will-change: transform, opacity;
         }
 
-        /* หน่วงเวลาให้ปุ่มโผล่มาไม่พร้อมกัน */
         .link-btn:nth-child(1) { animation-delay: 0.6s; }
         .link-btn:nth-child(2) { animation-delay: 0.7s; }
         .link-btn:nth-child(3) { animation-delay: 0.8s; }
@@ -712,24 +708,28 @@
     
     <script>
         // ====================================================
-        // 🚀 ระบบเช็คสเปคเครื่อง (Performance Checker)
+        // 🚀 ระบบเช็คสเปคเครื่อง (Performance Checker) ปรับปรุงใหม่
         // ====================================================
         let isLowEnd = false;
         
-        // ตรวจสอบ CPU Core และ RAM ของอุปกรณ์
-        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) {
-            isLowEnd = true; 
-        }
-        if (navigator.deviceMemory && navigator.deviceMemory <= 4) {
-            isLowEnd = true; 
-        }
-        
-        // ถ้าเป็น Android จะบังคับเปิด Lite Mode ไว้ก่อน เพื่อกันกระตุกจากภาพ 5K
-        if (/Android/i.test(navigator.userAgent)) {
-            isLowEnd = true; 
-        }
+        // ตรวจเช็คว่าเป็นระบบ iOS (iPhone/iPad/Mac) หรือไม่
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        const isAndroid = /Android/i.test(navigator.userAgent);
 
-        // ถ้าเครื่องสเปคไม่สูง หรือเป็นแอนดรอยด์ ให้เปิดใช้งาน LITE MODE (ปิด Blur ปิดอนิเมชันหนักๆ)
+        if (isAndroid) {
+            // ถ้าเป็น Android ให้บังคับใช้ Lite Mode เลยเพื่อความชัวร์เรื่องความลื่น
+            isLowEnd = true; 
+        } else if (!isIOS) {
+            // ถ้า *ไม่ใช่ iOS* ถึงจะมาเช็คสเปค CPU กับ RAM (เพราะ Apple ซ่อนสเปคไว้ Safari ชอบหลอกว่าเครื่องกาก)
+            if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) {
+                isLowEnd = true; 
+            }
+            if (navigator.deviceMemory && navigator.deviceMemory <= 4) {
+                isLowEnd = true; 
+            }
+        }
+        // สรุป: iPhone จะเป็น isLowEnd = false เสมอ ทำให้โชว์แสงเอฟเฟกต์เต็ม 100% แน่นอน
+
         if (isLowEnd) {
             document.body.classList.add('lite-mode');
         }
@@ -740,7 +740,6 @@
         const slideElements = document.querySelectorAll('.swiper-slide');
         const totalSlides = slideElements.length;
 
-        // ถ้าเปิดโหมดลื่นไหล จะลดภาพการ์ดด้านหลังจาก 3 ใบ เหลือแค่ 2 ใบให้เครื่องเบาขึ้น
         const limitRender = isLowEnd ? 2 : 3;
 
         const swiper = new Swiper(".mySwiper", {
@@ -759,21 +758,20 @@
             },
             keyboard: { enabled: true },
             
-            // 👇 ใส่ค่า Autoplay ให้เตรียมระบบสัมผัสไว้
+            // 👇 ระบบสัมผัสไม่ให้รบกวนออโต้ (แก้ไขแล้ว)
             autoplay: {
                 delay: 1800, 
-                disableOnInteraction: false, // ปล่อยมือแล้วเลื่อนออโต้ต่อได้
+                disableOnInteraction: false, 
             }
         });
 
-        // 🛑 หยุดการทำงานของออโต้โชว์ไว้ก่อน เพื่อเล่นอนิเมชันตอนเปิดเว็บ
+        // 🛑 หยุดรออนิเมชันเปิดเว็บ
         swiper.autoplay.stop();
 
         // ====================================================
         // ✨ ระบบอนิเมชันตอนเริ่มโหลดเว็บ (Intro Animation)
         // ====================================================
         setTimeout(() => {
-            // ถ้าเป็นเครื่องสเปคต่ำ จะให้ไพ่กรีดเร็วขึ้นนิดนึงเพื่อกันกระตุก (1500ms)
             const slideSpeed = isLowEnd ? 1500 : 2500;
 
             swiper.slideTo(0, slideSpeed);
