@@ -2,12 +2,17 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>QUNNERLA - Bio</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
     <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; 
+        }
+
         /* =========================================
            🌓 0. ระบบจัดการสีธีม (Dark / Light Mode)
            ========================================= */
@@ -36,18 +41,19 @@
         /* =========================================
            📌 1. ตั้งค่าโครงสร้างพื้นฐานของหน้าเว็บ
            ========================================= */
-        body {
+        html, body {
             margin: 0; padding: 0;
             min-height: 100vh;
+            width: 100vw; 
+            max-width: 100%; 
+            overflow-x: hidden; 
             background-color: var(--bg-color);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-color);
-            overflow-x: hidden;
             display: flex; flex-direction: column; align-items: center;
             transition: background-color 0.3s ease, color 0.3s ease; 
         }
 
-        /* 🔘 ปุ่มกดสลับ Dark/Light Mode มุมซ้ายบน */
         .theme-toggle {
             position: absolute;
             top: 20px; left: 20px;
@@ -68,7 +74,7 @@
            ========================================= */
         .profile-section {
             width: 100%; display: flex; flex-direction: column; align-items: center;
-            padding-top: 50px; z-index: 10;
+            padding-top: 60px; z-index: 10;
         }
 
         .profile-pic {
@@ -92,11 +98,11 @@
             width: 100%; max-width: 1200px;
             margin-top: 10px; 
             padding-bottom: 20px;
+            overflow: visible;
         }
 
         .swiper { width: 100%; padding: 70px 0 60px 0; overflow: visible; }
 
-        /* การ์ดเริ่มต้นสำหรับ PC จอใหญ่ */
         .swiper-slide {
             width: 300px; height: 450px; 
             background: transparent !important; 
@@ -111,32 +117,37 @@
            🌟 4. ระบบเลเยอร์ตราสัญลักษณ์ระดับ (Rank Badge)
            ========================================= */
         .rank-badge {
+            --rank-glow: transparent; 
             position: absolute;
             top: -65px; left: 50%; width: 60px; height: 60px;
             margin-left: -30px; object-fit: contain; opacity: 0; z-index: 100;
             transform: translateY(30px) scale(0.5); 
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1.2); 
-            pointer-events: none; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); 
+            pointer-events: none; 
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); 
             will-change: transform, opacity, filter;
         }
 
         .swiper-slide-active .rank-badge {
             opacity: 1; transform: translateY(0) scale(1.1); 
-            animation: glowOff 1.5s cubic-bezier(0.34, 1.56, 0.64, 1.2) forwards; animation-delay: 0.15s; 
+            animation: glowFadeOut 1.5s cubic-bezier(0.34, 1.56, 0.64, 1.2) forwards; 
+            animation-delay: 0.1s; 
         }
 
-        .rank-gold.swiper-slide-active .rank-badge { --rank-glow: rgba(255, 215, 0, 0.8); }
-        .rank-red.swiper-slide-active .rank-badge { --rank-glow: rgba(255, 50, 50, 0.8); }
-        .rank-blue.swiper-slide-active .rank-badge { --rank-glow: rgba(50, 150, 255, 0.8); }
-        .rank-green.swiper-slide-active .rank-badge { --rank-glow: rgba(50, 255, 50, 0.8); }
-        .rank-purple.swiper-slide-active .rank-badge { --rank-glow: rgba(180, 50, 255, 0.8); }
-        .rank-silver.swiper-slide-active .rank-badge { --rank-glow: rgba(230, 230, 230, 0.9); }
+        /* 💡 ดักชื่อคลาสทั้งตัวพิมพ์เล็กและใหญ่ พร้อมปรับแสงให้อ่อนลง (0.8) แบบต้นฉบับ */
+        .rank-gold .rank-badge, .rank-Gold .rank-badge { --rank-glow: rgba(255, 215, 0, 0.8); }
+        .rank-red .rank-badge, .rank-Red .rank-badge { --rank-glow: rgba(255, 50, 50, 0.8); }
+        .rank-blue .rank-badge, .rank-Blue .rank-badge { --rank-glow: rgba(50, 150, 255, 0.8); }
+        .rank-green .rank-badge, .rank-Green .rank-badge { --rank-glow: rgba(50, 255, 50, 0.8); }
+        .rank-purple .rank-badge, .rank-Purple .rank-badge { --rank-glow: rgba(180, 50, 255, 0.8); }
+        .rank-silver .rank-badge, .rank-Silver .rank-badge { --rank-glow: rgba(230, 230, 230, 0.9); }
 
-        @keyframes glowOff {
-            0%   { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 0px var(--rank-glow, transparent)); }
-            20%  { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 25px var(--rank-glow, transparent)); }
-            50%  { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 10px var(--rank-glow, transparent)); }
-            100% { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 0px var(--rank-glow, transparent)); }
+        /* 💡 อนิเมชันแสงแบบเฟดดับ สว่างวาบแล้วค่อยๆ กลืนหายไป */
+        @keyframes glowFadeOut {
+            0%   { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 0px transparent); }
+            20%  { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 25px var(--rank-glow)); }
+            50%  { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 10px var(--rank-glow)); }
+            100% { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 0px transparent); }
         }
 
         /* =========================================
@@ -218,15 +229,13 @@
            📱 8. การตั้งค่ารองรับหน้าจอ (Responsive)
            ========================================= */
         
-        /* แท็บเล็ต (iPad) */
         @media (max-width: 1024px) {
             .swiper-slide { width: 280px; height: 420px; }
             h1 { font-size: 22px; }
         }
 
-        /* สมาร์ทโฟน (Mobile) */
         @media (max-width: 768px) {
-            .swiper-slide { width: 250px; height: 375px; } /* ปรับสัดส่วนให้กว้างขึ้น ไม่บีบแล้ว */
+            .swiper-slide { width: 250px; height: 375px; } 
             .profile-pic { width: 90px; height: 90px; }
             h1 { font-size: 20px; }
             .card-details h3 { font-size: 16px; }
@@ -235,17 +244,19 @@
             .swiper-slide-active .card-details { bottom: 15px; }
             .rank-badge { top: -50px; width: 55px; height: 55px; margin-left: -27.5px; } 
             
-            /* ลดความกว้างปุ่มลิงก์บนมือถือให้พอดีขอบ */
-            .links-container { padding: 0 20px 50px 20px; }
+            .links-container { padding: 0 20px 50px 20px !important; }
         }
 
         /* =========================================
            🔗 9. กล่องปุ่มลิงก์โซเชียล
            ========================================= */
         .links-container {
-            width: 100%; max-width: 450px; 
+            width: 100%; 
+            max-width: 450px; 
             display: flex; flex-direction: column; gap: 12px;
-            padding: 0 20px 60px 20px; z-index: 10; box-sizing: border-box;
+            padding: 0 20px 60px 20px; 
+            margin: 0 auto; 
+            z-index: 10; 
         }
 
         .link-btn {
@@ -648,7 +659,6 @@
             slideToClickedSlide: true,
             creativeEffect: {
                 limitProgress: 3, 
-                /* ปรับองศาการซ้อนกันให้กางออกสมูทขึ้น ไม่เบียดกันเกินไป */
                 prev: { translate: ["-65%", "10%", -400], rotate: [0, 0, -8], origin: "bottom center" },
                 next: { translate: ["65%", "10%", -400], rotate: [0, 0, 8], origin: "bottom center" },
             },
