@@ -183,6 +183,13 @@
             100% { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 0px transparent); }
         }
 
+        /* 🚀 LITE MODE สำหรับเครื่องสเปคต่ำ (ปิดการเรืองแสงแอนิเมชันหนักๆ เพื่อลดแลค) */
+        body.lite-mode .swiper-slide-active .rank-badge {
+            animation: none; 
+            opacity: 1; transform: translateY(0) scale(1.1); 
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.9)); 
+        }
+
         /* =========================================
            🖼️ 6. เลเยอร์ตัวการ์ด (Card Inner)
            ========================================= */
@@ -205,6 +212,14 @@
 
         .swiper-slide:not(.swiper-slide-active) .card-inner { filter: blur(3px) brightness(0.6); }
         .swiper-slide-active .card-inner { filter: blur(0px) brightness(1); transform: translateY(-25px); }
+
+        /* 🚀 LITE MODE สำหรับเครื่องสเปคต่ำ (ปิดระบบ Blur ไพ่ด้านหลัง) */
+        body.lite-mode .swiper-slide:not(.swiper-slide-active) .card-inner { 
+            filter: brightness(0.4); 
+        }
+        body.lite-mode .swiper-slide-active .card-inner { 
+            filter: brightness(1); 
+        }
 
         .image-cover {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -696,8 +711,37 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script>
+        // ====================================================
+        // 🚀 ระบบเช็คสเปคเครื่อง (Performance Checker)
+        // ====================================================
+        let isLowEnd = false;
+        
+        // ตรวจสอบ CPU Core และ RAM ของอุปกรณ์
+        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) {
+            isLowEnd = true; 
+        }
+        if (navigator.deviceMemory && navigator.deviceMemory <= 4) {
+            isLowEnd = true; 
+        }
+        
+        // ถ้าเป็น Android จะบังคับเปิด Lite Mode ไว้ก่อน เพื่อกันกระตุกจากภาพ 5K
+        if (/Android/i.test(navigator.userAgent)) {
+            isLowEnd = true; 
+        }
+
+        // ถ้าเครื่องสเปคไม่สูง หรือเป็นแอนดรอยด์ ให้เปิดใช้งาน LITE MODE (ปิด Blur ปิดอนิเมชันหนักๆ)
+        if (isLowEnd) {
+            document.body.classList.add('lite-mode');
+        }
+
+        // ====================================================
+        // การตั้งค่า Swiper
+        // ====================================================
         const slideElements = document.querySelectorAll('.swiper-slide');
         const totalSlides = slideElements.length;
+
+        // ถ้าเปิดโหมดลื่นไหล จะลดภาพการ์ดด้านหลังจาก 3 ใบ เหลือแค่ 2 ใบให้เครื่องเบาขึ้น
+        const limitRender = isLowEnd ? 2 : 3;
 
         const swiper = new Swiper(".mySwiper", {
             effect: "creative",
@@ -709,34 +753,37 @@
             
             slideToClickedSlide: true,
             creativeEffect: {
-                limitProgress: 3, 
+                limitProgress: limitRender, 
                 prev: { translate: ["-65%", "10%", -400], rotate: [0, 0, -8], origin: "bottom center" },
                 next: { translate: ["65%", "10%", -400], rotate: [0, 0, 8], origin: "bottom center" },
             },
             keyboard: { enabled: true },
             
-            autoplay: false 
+            // 👇 ใส่ค่า Autoplay ให้เตรียมระบบสัมผัสไว้
+            autoplay: {
+                delay: 1800, 
+                disableOnInteraction: false, // ปล่อยมือแล้วเลื่อนออโต้ต่อได้
+            }
         });
+
+        // 🛑 หยุดการทำงานของออโต้โชว์ไว้ก่อน เพื่อเล่นอนิเมชันตอนเปิดเว็บ
+        swiper.autoplay.stop();
 
         // ====================================================
         // ✨ ระบบอนิเมชันตอนเริ่มโหลดเว็บ (Intro Animation)
         // ====================================================
         setTimeout(() => {
-            swiper.slideTo(0, 2500);
+            // ถ้าเป็นเครื่องสเปคต่ำ จะให้ไพ่กรีดเร็วขึ้นนิดนึงเพื่อกันกระตุก (1500ms)
+            const slideSpeed = isLowEnd ? 1500 : 2500;
+
+            swiper.slideTo(0, slideSpeed);
 
             swiper.once('slideChangeTransitionEnd', () => {
                 if(swiper.activeIndex === 0) {
-                    swiper.params.autoplay = {
-                        delay: 1800, 
-                        // 👇 แก้ตรงนี้เป็น false ให้กลับมาเลื่อนออโต้หลังคนดูปล่อยมือ
-                        disableOnInteraction: false, 
-                        stopOnLastSlide: true 
-                    };
                     swiper.autoplay.start();
                 }
             });
         }, 1200); 
-
 
         // ====================================================
         // ระบบปุ่มเปลี่ยนโหมดสี (Dark / Light Mode)
