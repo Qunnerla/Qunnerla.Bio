@@ -5,7 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>QUNNERLA - Bio</title>
     
+    <link rel="preconnect" href="https://esvaazkbtmjxiqwycsze.supabase.co" crossorigin>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script>
+        document.addEventListener('error', (event) => {
+            const img = event.target;
+            if (img instanceof HTMLImageElement && img.dataset.localSrc) {
+                img.src = img.dataset.localSrc;
+                img.removeAttribute('data-local-src');
+            }
+        }, true);
+    </script>
     
     <style>
         * {
@@ -126,6 +136,9 @@
         }
         .swiper-slide-active .rank-badge-wrapper {
             opacity: 1; transform: translateY(0) scale(1.1); 
+        }
+        .swiper-slide .rank-badge-wrapper {
+            display: none;
         }
 
         /* 💡 แก้ไขแสง: ลดความฟุ้งกระจายลง (จาก 35px เหลือ 20px) */
@@ -275,7 +288,7 @@
     <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme">☀️</button>
 
     <div class="profile-section">
-        <img src="Qun.png" alt="Profile" class="profile-pic">
+        <img src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Qun.png" data-local-src="Qun.png" alt="Profile" class="profile-pic" decoding="async" fetchpriority="high">
         <h1>QUNNERLA</h1>
         <p class="bio-desc">2D Animator / Motion Artist<br></p>
     </div>
@@ -284,18 +297,77 @@
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
 
-                                <div class="swiper-slide rank-gold">
+                <div class="swiper-slide rank-gold">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Gold.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Nakroth-Levi.jpg" alt="Nakroth">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Laville-Star-Striker.jpg" data-local-src="Laville-Star-Striker.jpg" alt="Laville" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
                             <div class="collection-badge badge-new">Newest Collection</div>
+                            <h3>Laville | Star Striker</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide rank-gold">
+                    <div class="rank-badge-wrapper">
+                        <div class="rank-glow-bg"></div>
+                    </div>
+                    <div class="card-inner">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Nakroth-Levi.jpg" data-local-src="Nakroth-Levi.jpg" alt="Nakroth" loading="lazy" decoding="async">
+                        <div class="card-overlay"></div>
+                        <div class="card-gradient"></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
                             <h3>Nakroth | Levi</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide rank-gold">
+                    <div class="rank-badge-wrapper">
+                        <div class="rank-glow-bg"></div>
+                    </div>
+                    <div class="card-inner">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Cresht-Eren-Jeager.jpg" data-local-src="Cresht-Eren-Jeager.jpg" alt="Cresht" loading="lazy" decoding="async">
+                        <div class="card-overlay"></div>
+                        <div class="card-gradient"></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Cresht | Eren Jeager</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide rank-gold">
+                    <div class="rank-badge-wrapper">
+                        <div class="rank-glow-bg"></div>
+                    </div>
+                    <div class="card-inner">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Perfumer-Mnemosynes.jpg" data-local-src="Perfumer-Mnemosynes.jpg" alt="Perfumer" loading="lazy" decoding="async">
+                        <div class="card-overlay"></div>
+                        <div class="card-gradient"></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Perfumer | Mnemosynes</h3><p>Animation PNG Resolution 5K</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide rank-gold">
+                    <div class="rank-badge-wrapper">
+                        <div class="rank-glow-bg"></div>
+                    </div>
+                    <div class="card-inner">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Nie-Moli-Paper-Bride.jpg" data-local-src="Nie-Moli-Paper-Bride.jpg" alt="Nie Moli" loading="lazy" decoding="async">
+                        <div class="card-overlay"></div>
+                        <div class="card-gradient"></div>
+                        <div class="card-details">
+                            <div class="collection-badge badge-past">Past Collection</div>
+                            <h3>Nie Moli | Paper Bride</h3><p>Animation PNG Resolution 5K</p>
                         </div>
                     </div>
                 </div>
@@ -303,10 +375,9 @@
                 <div class="swiper-slide rank-red">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Red.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Liliana-Glazed-World.jpg" alt="Liliana">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Liliana-Glazed-World.jpg" data-local-src="Liliana-Glazed-World.jpg" alt="Liliana" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -319,10 +390,9 @@
                 <div class="swiper-slide rank-red">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Red.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Wukong-Formless.jpg" alt="Wukong">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Wukong-Formless.jpg" data-local-src="Wukong-Formless.jpg" alt="Wukong" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -335,10 +405,9 @@
                 <div class="swiper-slide rank-red">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Red.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Volkath-Preying-Umbra.jpg" alt="Volkath">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Volkath-Preying-Umbra.jpg" data-local-src="Volkath-Preying-Umbra.jpg" alt="Volkath" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -351,10 +420,9 @@
                 <div class="swiper-slide rank-red">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Red.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Arli-Smoke-Of-Partings.jpg" alt="Arli">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Arli-Smoke-Of-Partings.jpg" data-local-src="Arli-Smoke-Of-Partings.jpg" alt="Arli" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -367,10 +435,9 @@
                 <div class="swiper-slide rank-red">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Red.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Diao-chan-Elemental-Divinity.jpg" alt="Diao Chan">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Diao-chan-Elemental-Divinity.jpg" data-local-src="Diao-chan-Elemental-Divinity.jpg" alt="Diao Chan" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -383,10 +450,9 @@
                 <div class="swiper-slide rank-purple">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Purple.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Rouie-Glazed-World.jpg" alt="Rouie">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Rouie-Glazed-World.jpg" data-local-src="Rouie-Glazed-World.jpg" alt="Rouie" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -399,10 +465,9 @@
                 <div class="swiper-slide rank-purple">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Purple.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Little-Mirage.jpg" alt="Little Mirage">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Little-Mirage.jpg" data-local-src="Little-Mirage.jpg" alt="Little Mirage" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -415,10 +480,9 @@
                 <div class="swiper-slide rank-purple">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Purple.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Nymph-Gardener.jpg" alt="Nymph">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Nymph-Gardener.jpg" data-local-src="Nymph-Gardener.jpg" alt="Nymph" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -431,10 +495,9 @@
                 <div class="swiper-slide rank-purple">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Purple.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Veera-Melody-Love.jpg" alt="Veera">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Veera-Melody-Love.jpg" data-local-src="Veera-Melody-Love.jpg" alt="Veera" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -447,10 +510,9 @@
                 <div class="swiper-slide rank-purple">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Purple.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Aya-Cinnamoroll-Dream.jpg" alt="Aya">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Aya-Cinnamoroll-Dream.jpg" data-local-src="Aya-Cinnamoroll-Dream.jpg" alt="Aya" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -463,10 +525,9 @@
                 <div class="swiper-slide rank-purple">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Purple.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Natalya-Kuromi-Heart.jpg" alt="Natalya">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Natalya-Kuromi-Heart.jpg" data-local-src="Natalya-Kuromi-Heart.jpg" alt="Natalya" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -479,10 +540,9 @@
                 <div class="swiper-slide rank-purple">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Purple.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Tulen-Gojo-Satoru.jpg" alt="Tulen">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Tulen-Gojo-Satoru.jpg" data-local-src="Tulen-Gojo-Satoru.jpg" alt="Tulen" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -495,10 +555,9 @@
                 <div class="swiper-slide rank-blue">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Blue.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Raz-Super-Striker.jpg" alt="Raz">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Raz-Super-Striker.jpg" data-local-src="Raz-Super-Striker.jpg" alt="Raz" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -511,10 +570,9 @@
                 <div class="swiper-slide rank-blue">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Blue.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Sephera-Western-Regions-Stormy.jpg" alt="Sephera">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Sephera-Western-Regions-Stormy.jpg" data-local-src="Sephera-Western-Regions-Stormy.jpg" alt="Sephera" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -527,10 +585,9 @@
                 <div class="swiper-slide rank-blue">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Blue.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Iggy-Rimuru-Tempest.jpg" alt="Iggy">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Iggy-Rimuru-Tempest.jpg" data-local-src="Iggy-Rimuru-Tempest.jpg" alt="Iggy" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -543,10 +600,9 @@
                 <div class="swiper-slide rank-blue">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Blue.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Tara-Shion.jpg" alt="Tara">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Tara-Shion.jpg" data-local-src="Tara-Shion.jpg" alt="Tara" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -559,10 +615,9 @@
                 <div class="swiper-slide rank-blue">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Blue.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Qi-Milim-Nava.jpg" alt="Qi">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Qi-Milim-Nava.jpg" data-local-src="Qi-Milim-Nava.jpg" alt="Qi" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -575,10 +630,9 @@
                 <div class="swiper-slide rank-blue">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Blue.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Nakroth-Stellar-Troupe.jpg" alt="Nakroth">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Nakroth-Stellar-Troupe.jpg" data-local-src="Nakroth-Stellar-Troupe.jpg" alt="Nakroth" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -591,10 +645,9 @@
                 <div class="swiper-slide rank-blue">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Blue.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Violet-Demonic-morphed.jpg" alt="Violet">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Violet-Demonic-morphed.jpg" data-local-src="Violet-Demonic-morphed.jpg" alt="Violet" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -607,10 +660,9 @@
                 <div class="swiper-slide rank-green">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Green.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Frieren.jpg" alt="Frieren">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Frieren.jpg" data-local-src="Frieren.jpg" alt="Frieren" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -623,10 +675,9 @@
                 <div class="swiper-slide rank-green">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Green.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Xi-Shi-Lovesickness.jpg" alt="Xi Shi">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Xi-Shi-Lovesickness.jpg" data-local-src="Xi-Shi-Lovesickness.jpg" alt="Xi Shi" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -639,10 +690,9 @@
                 <div class="swiper-slide rank-green">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Green.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Liliana-Witching-Hour.jpg" alt="Liliana">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Liliana-Witching-Hour.jpg" data-local-src="Liliana-Witching-Hour.jpg" alt="Liliana" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -655,10 +705,9 @@
                 <div class="swiper-slide rank-green">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Green.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Murad-Moon-Chuser.jpg" alt="Murad">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Murad-Moon-Chuser.jpg" data-local-src="Murad-Moon-Chuser.jpg" alt="Murad" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -671,10 +720,9 @@
                 <div class="swiper-slide rank-silver">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Silver.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Hayate-Kid-the-Phantom.jpg" alt="Hayate">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Hayate-Kid-the-Phantom.jpg" data-local-src="Hayate-Kid-the-Phantom.jpg" alt="Hayate" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -687,10 +735,9 @@
                 <div class="swiper-slide rank-silver">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Silver.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Valhien-Dimension-Breaker.jpg" alt="Valhien">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Valhien-Dimension-Breaker.jpg" data-local-src="Valhien-Dimension-Breaker.jpg" alt="Valhien" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -703,10 +750,9 @@
                 <div class="swiper-slide rank-silver">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Silver.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Airi-Witching-Hour.jpg" alt="Airi">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Airi-Witching-Hour.jpg" data-local-src="Airi-Witching-Hour.jpg" alt="Airi" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
@@ -719,10 +765,9 @@
                 <div class="swiper-slide rank-silver">
                     <div class="rank-badge-wrapper">
                         <div class="rank-glow-bg"></div>
-                        <img class="rank-badge" src="Silver.png" alt="Rank">
                     </div>
                     <div class="card-inner">
-                        <img class="image-cover" src="Buterfly-EVO.jpg" alt="Butterfly">
+                        <img class="image-cover" src="https://esvaazkbtmjxiqwycsze.supabase.co/storage/v1/object/public/qunnerla-bio/Buterfly-EVO.jpg" data-local-src="Buterfly-EVO.jpg" alt="Butterfly" loading="lazy" decoding="async">
                         <div class="card-overlay"></div>
                         <div class="card-gradient"></div>
                         <div class="card-details">
